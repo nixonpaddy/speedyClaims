@@ -11,9 +11,6 @@ const OpenClaimsDetails = (props) => {
      console.log();
 
 
-
-
-
     return(
 
         <div>

@@ -25,7 +25,7 @@ const OpenClaims = () => {
    }
    
 
-     console.log(policyToDisplay);  
+    
      console.log(showDisplay); 
 
 
