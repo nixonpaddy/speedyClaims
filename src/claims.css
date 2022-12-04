@@ -1,0 +1,131 @@
+
+
+.title-bar{
+    height:80px;
+    background-color:rgb(180, 208, 245);
+    padding:10px;
+    text-align: center;
+    font-family: 'Faster One', cursive;
+    color:rgb(116, 116, 116);
+}
+
+
+#button-bar{
+    background-color: rgb(142, 168, 238);
+    padding: 5px;
+}
+
+#button-bar.container{
+    width: 100%;
+}
+
+.btn-secondary{
+    width:100%;
+    border: 2px solid black;
+    outline-style: solid;
+    margin:5px;
+}
+
+#form-details{
+    width:400px;
+    background-color: rgb(130, 132, 202);
+    padding: 20px;
+    border-radius: 10%;
+    border: 3px solid black;
+    
+}
+
+.heading{
+    text-align: center;
+}
+
+.bottom-space{
+    height:80px;
+}
+
+.footing{
+    height:150px;
+    background-color: rgb(142, 168, 238);
+
+}
+
+.submit-button{
+    text-align: center;
+}
+
+/* body{
+    margin: auto;
+} */
+
+
+.logo{
+    height:90%;
+
+    vertical-align:top;
+    /* display:inline-block; */
+    border-radius: 20%;
+    margin-top: -55px;
+    position:relative;
+    float:right;
+ 
+  }
+
+  .center{
+    text-align: center;
+  }
+
+  table, table td, table th, table tr{
+    border:2px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: solid;
+    border-color: black;
+    padding:2px;
+  }
+
+  .back-button{
+    margin-left: auto;
+    margin-right: auto;
+    
+  }
+
+  .back-button-container{
+    text-align: center;
+  }
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 768px) and (orientation: portrait) {
+
+
+    .wrapper {
+      background-color: lightblue;
+    }
+
+    form{
+        width:200px;
+        text-align: center;
+        margin: auto;
+    }
+
+    .logo{
+        display: none;
+    }
+  }
+
+  .oc-select-box{
+
+    text-align: center;
+  }
+
+  li{
+    list-style:none;
+  }
+
