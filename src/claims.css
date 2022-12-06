@@ -94,6 +94,10 @@
     text-align: center;
   }
 
+  .hide-border{
+    border:none;
+  }
+
 
 
 
@@ -123,6 +127,13 @@
   .oc-select-box{
 
     text-align: center;
+    width:400px;
+    background-color: rgb(130, 132, 202);
+    padding: 20px;
+    border-radius: 10%;
+    border: 3px solid black;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   li{

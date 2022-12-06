@@ -11,6 +11,7 @@ import { useEffect } from "react";
 const OpenClaims = () => {
 
 
+    const [backToClaims, setBackToClaims] = useState(false);
     const [policyToDisplay, setPolicyToDisplay] = useState({policy_number: 0, name: "", status: ""});
     const [showDisplay, setShowDisplay] = useState(false);
 
@@ -22,11 +23,19 @@ const OpenClaims = () => {
    const showClaim = (event) => {
     setPolicyToDisplay(openClaims.filter((claim,index) => claim.policy_number == event.target.value));
     setShowDisplay(true);  
+    setBackToClaims(true);
+   }
+
+   const hideClaim = (event) => {
+    setPolicyToDisplay(openClaims.filter((claim,index) => claim.policy_number == event.target.value));
+    setShowDisplay(false);  
+    setBackToClaims(false);
+
    }
    
 
     
-     console.log(showDisplay); 
+
 
 
 return(
@@ -39,24 +48,24 @@ return(
 <br/>
 <br/>
 
-<div className="oc-select-box">
 
-    {!showDisplay &&     <ul>
+
+    {!showDisplay && <div className="oc-select-box"> <ul>
    
-    {openClaims.map((claim, index) => <>
-    <li key={index}>Policy Number:<br/> {claim.policy_number}</li> 
-
-
-<button value = {claim.policy_number} onClick = {showClaim}>View details</button>
+    {openClaims.map((claim, index) => <div key={index}>
+    <li>Policy Number:<br/> {claim.policy_number}</li> 
+    <button value = {claim.policy_number} onClick = {showClaim}>View details</button>
    
 
     <br/><br/>
-    </>)}
+    </div>)}
 
-    </ul>}
+    </ul></div>}
 
 
-</div>
+
+
+
 
 
 
@@ -65,6 +74,7 @@ return(
 
 </div>  
 
+{backToClaims && <div className="back-button-container">  <button className="back-button" onClick = {hideClaim}>Back to Open Claims List</button></div>}
          
     </>
 )

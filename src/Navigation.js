@@ -18,7 +18,7 @@ const Navigation = () =>{
  <div className="row">
     <div className="col-md-3 col-6"><NavLink to="/newclaim" ><button className="btn btn-secondary">New Claim</button></NavLink></div> 
     <div className="col-md-3 col-6"><NavLink to="/openclaims" ><button className="btn btn-secondary">Open Claims</button></NavLink></div> 
-    <div className="col-md-3 col-6"><NavLink to="/searchclaim" ><button className="btn btn-secondary">Search</button></NavLink></div> 
+    <div className="col-md-3 col-6"><NavLink to="/search" ><button className="btn btn-secondary">Search</button></NavLink></div> 
     <div className="col-md-3 col-6"><NavLink to="/newclaim" ><button className="btn btn-secondary">Archive</button></NavLink></div> 
 
  </div>     

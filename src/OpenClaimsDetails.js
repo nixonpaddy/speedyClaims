@@ -8,7 +8,7 @@ const OpenClaimsDetails = (props) => {
 
     const openClaims = allClaims.filter((claim,index) =>claim.status === "open");
 
-     console.log();
+
 
 
     return(
@@ -46,7 +46,7 @@ const OpenClaimsDetails = (props) => {
         </div>
         <br/>
 
-        <div className="back-button-container">  <button className="back-button">Back to Open Claims List</button></div>
+        
 
       
 
