@@ -98,6 +98,17 @@
     border:none;
   }
 
+  .bottom-space{
+    height:80px;
+}
+
+.footing{
+    height:150px;
+    background-color: rgb(142, 168, 238);
+
+}
+
+
 
 
 

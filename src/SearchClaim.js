@@ -1,9 +1,17 @@
 import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import ResultsTable from "./ResultsTable";
+
+
 
 const SearchClaim = (props) =>{
 
-const [policySearchTerm, setPolicySearchTerm] = useState();
+  const params = useParams();
+
+  if(params.orderId != null && params.orderId !== props.searchTerm) {
+    props.setSearchTerm(params.orderId)}
+
+const [policySearchTerm, setPolicySearchTerm] = useState("");
 const navigate = useNavigate();
 
 
@@ -15,6 +23,15 @@ const carryOutSearch = (event) => {
   event.preventDefault();
   props.setSearchTerm(policySearchTerm);
   navigate(`/search/${policySearchTerm}`);
+}
+
+const clearSearch = (event) => {
+  event.preventDefault();
+  props.setSearchTerm("");
+  navigate(`/search`);
+  setPolicySearchTerm("");
+
+  
 }
 
 
@@ -32,7 +49,7 @@ const carryOutSearch = (event) => {
           <form onSubmit={carryOutSearch}>
             <div className="row">
               <div className="col"><label>Search by Policy Number:</label></div>
-              <div className="col"><input type="text" onChange={handleChange}/><br/></div>
+              <div className="col"><input type="text" onChange={handleChange} value={policySearchTerm}/><br/></div>
             </div><br/>
       
             <p className="center">--OR--</p><br/>
@@ -47,11 +64,16 @@ const carryOutSearch = (event) => {
                   
             <br/>
             <div className="submit-button"><button>Search</button></div>
+            <br/>
+            <div className="submit-button"><button onClick={clearSearch}>Clear Search</button></div>
           </form>
         </div>
         <br/>  
 
+        {props.searchTerm !== "" && <ResultsTable searchTerm={props.searchTerm} setPasssedResults={props.setPassedResults}/>}
+
         </>
+
     )
 }
 

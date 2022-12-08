@@ -6,28 +6,33 @@ import NewClaim from "./NewClaim"
 import {Routes, Route} from "react-router-dom";
 import SearchClaim from "./SearchClaim"
 import OpenClaims from './OpenClaims';
-import OpenClaimsDetails from './OpenClaimsDetails';
 import { useState } from 'react';
-import SearchResultsPage from "./SearchResultsPage";
+import BottomBorder from "./BottomBorder";
+import PolicyDetails from './PolicyDetails';
 
 function App() {
 
   const [searchTerm, setSearchTerm] = useState("");
-
+ 
 
   return (
+    <>
   
 
     <Routes>
       <Route element = {<Navigation />}>
         <Route path="/NewClaim" element={<NewClaim />}/>
-        <Route path="/Search" element={<SearchClaim setSearchTerm={setSearchTerm} searchTerm={searchTerm}/>}/>
+        <Route path="/Search" element={<SearchClaim setSearchTerm={setSearchTerm} searchTerm={searchTerm} />}/>
         <Route path="/OpenClaims" element={<OpenClaims />}/>
-        <Route path="/Search/:policyNumber"  element={<SearchResultsPage  searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>}/>
+        <Route path="/Search/:policyNumber"  element={<SearchClaim setSearchTerm={setSearchTerm} searchTerm={searchTerm} />}/>
+        <Route path="/" element = { <h1 className="center">Welcome to the Claims system. Please select an option above.</h1>}/>
+        <Route path="/PolicyDetails/:policyNumber"  element={<PolicyDetails />}/>
+        <Route path="*"  element={<h1 className="center">This page does not exist</h1>}/>
 
-
-      </Route>
+      </Route>     
     </Routes>
+    <BottomBorder />
+    </>
 
 
 

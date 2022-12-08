@@ -12,6 +12,7 @@ const getAllClaims = () => {
         {policy_number: 8, sname: "Hannigan", fname: "Sinead", status: "open"},
         {policy_number: 9, sname: "Harrison", fname: "Nichola", status: "awaiting more info"},
         {policy_number: 10, sname: "Irvine", fname: "Brian", status: "open"},
+        {policy_number: 11, sname: "Younger", fname: "Louise", status: "open"}
     ]
 
 }
