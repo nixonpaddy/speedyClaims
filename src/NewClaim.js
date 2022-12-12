@@ -1,7 +1,45 @@
+import getAllClaims from "./ClaimsData";
+ import { useReducer } from "react";
 import "./claims.css"
+import { addNewClaim } from "./ClaimsData";
 
-const NewClaim = () => {
+const NewClaim = (props) => {
+
+
+    const handleChange = (event) => {
+
+      dispatch({field : event.target.id, value : event.target.value});      
+
+    }
+    
+
+  const template = {policy_number:"", sname:"", fname:"", status:"open", }
+
+ 
+  const formReducer = (state, data) => {
+    return {...state, [data.field] : data.value}
+}
+
+
+  const [aNewClaim, dispatch] = useReducer(formReducer, template);
+
+
+
+  const addClaim = (event) => {
+    event.preventDefault();
+    props.setNewClaimsList([...props.newClaimsList, aNewClaim]);
+    
+  }
+
+  
+
+
+
+
+
     return(
+
+
 
         <div>
 
@@ -9,34 +47,34 @@ const NewClaim = () => {
         <br/>
         <br/>
         <div className="container" id="form-details">
-          <form>
+          <form onSubmit={addClaim}>
             <div className="row">
               <div className="col"><label>Policy Number:</label></div>
-              <div className="col"><input type="text"/><br/></div>
+              <div className="col"><input type="text" id="policy_number" onChange={handleChange}/><br/></div>
             </div><br/>
       
             <div className="row">
               <div className="col"><label>First Name:</label></div>
-              <div className="col"><input type="text"/><br/></div>
+              <div className="col"><input type="text" id="fname" onChange={handleChange}/><br/></div>
             </div><br/>
       
             <div className="row">
               <div className="col"><label>Surname:</label></div>
-              <div className="col"><input type="text"/><br/></div>
+              <div className="col"><input type="text" id="sname" onChange={handleChange}/><br/></div>
             </div><br/>
       
             <div className="row">
               <div className="col"><label>Email:</label></div>
-              <div className="col"><input type="email"/><br/></div>
+              <div className="col"><input type="email" id="email" /><br/></div>
             </div><br/>
       
             <div className="row">
               <div className="col"><label>Phone Number:</label></div>
-              <div className="col"><input type="number"/><br/></div>
+              <div className="col"><input type="number" id="phone-number"/><br/></div>
             </div><br/>
             
             <br/>
-            <div className="submit-button"><button>Submit</button></div>
+            <div className="submit-button"><button >Submit</button></div>
           </form>
         </div>
 

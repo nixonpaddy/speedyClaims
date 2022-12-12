@@ -1,5 +1,5 @@
 import "./claims.css"
-import getAllClaims from "./ClaimsData";
+import { getAllClaims } from "./ClaimsData";
 
 
 const OpenClaimsDetails = (props) => {

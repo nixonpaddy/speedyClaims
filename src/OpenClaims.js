@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 
 
-const OpenClaims = () => {
+const OpenClaims = (props) => {
 
 
     const [backToClaims, setBackToClaims] = useState(false);
@@ -16,7 +16,8 @@ const OpenClaims = () => {
     const [showDisplay, setShowDisplay] = useState(false);
 
 
-    const allClaims = getAllClaims();
+    //const allClaims = getAllClaims();
+    const allClaims = props.allClaims;
     const openClaims = allClaims.filter((claim,index) =>claim.status === "open");
    
 

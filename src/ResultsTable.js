@@ -6,12 +6,15 @@ import TableRow from "./TableRow";
 
 const ResultsTable = (props) => {
 
-
-    const allClaims = getAllClaims();
-    const searchResults = allClaims.filter((claim,index) => claim.policy_number == props.searchTerm);
+    const allClaims = props.allClaims;
+    let searchResults = allClaims.filter((claim,index) => claim.policy_number == props.searchTerm);
 
     const [selectedPolicy, setSelectedPolicy] = useState("");
     const [displaySearch, setDisplaySearch] = useState("true");
+
+    if(props.searchType == "name"){
+        searchResults = allClaims.filter((claim,index) => claim.sname.toLowerCase().includes(props.nameSearch.toLowerCase()));
+    }
 
 
  
