@@ -10,6 +10,7 @@ import { useState } from 'react';
 import BottomBorder from "./BottomBorder";
 import PolicyDetails from './PolicyDetails';
 import getAllClaims from './ClaimsData';
+import EditPolicy from './EditPolicy';
 
 function App() {
 
@@ -17,6 +18,9 @@ function App() {
   const [NameSearchTerm, setNameSearchTerm] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const[newClaimsList, setNewClaimsList] = useState(getAllClaims);
+
+  console.log(newClaimsList);
+
   
  
  
@@ -34,6 +38,7 @@ function App() {
         <Route path="/" element = { <h1 className="center">Welcome to the Claims system. Please select an option above.</h1>}/>
         <Route path="/PolicyDetails/:policyNumber"  element={<PolicyDetails />}/>
         <Route path="*"  element={<h1 className="center">This page does not exist</h1>}/>
+        <Route path="/editpolicy/:policyNumber"  element={<EditPolicy  claimsList={newClaimsList} setNewClaimsList={setNewClaimsList}/>}/>
       </Route>     
     </Routes>
     <BottomBorder />

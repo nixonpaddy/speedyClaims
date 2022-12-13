@@ -1,26 +1,23 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ResultsTable from "./ResultsTable";
 
 
 
 const SearchClaim = (props) =>{
 
-const params = useParams();
 const [displayTable, setDisplayTable] = useState(false);
 const [searchBoxes, setSearchBoxes] = useState(false);
-
-
 const [policySearchTerm, setPolicySearchTerm] = useState("");
-const navigate = useNavigate();
 const [nameSearch, setNameSearch] = useState("");
-const[oneTerm, setOneTerm] = useState(false);
-
-
+const [oneTerm, setOneTerm] = useState(false);
+const navigate = useNavigate();
+const allClaims = props.allClaims;
 
 const handleChange = (event) => {
   setPolicySearchTerm(event.target.value);
 }
+
 
 const handleNameChange = (event) => {  
   setNameSearch(event.target.value);  
@@ -37,15 +34,11 @@ const carryOutSearch = (event) => {
     navigate(`/search/${nameSearch}`);
   }else{
     props.setSearchType("policy");
- navigate(`/search/${policySearchTerm}`);
+    navigate(`/search/${policySearchTerm}`);
   }
 
   setDisplayTable(true);
   setSearchBoxes(true);
-  
- 
-
-
 }
 
 
@@ -73,7 +66,7 @@ const oneTermEntered = () => {
 
 
 
-const allClaims = props.allClaims;
+
 
     return(
 
@@ -107,7 +100,7 @@ const allClaims = props.allClaims;
         </div>
         <br/>  
 
-        {displayTable && <ResultsTable nameSearch={nameSearch} searchTerm={props.searchTerm} allClaims={allClaims} searchType={props.searchType}/>}
+        {displayTable && <ResultsTable setPolicyToEdit={props.setPolicyToEdit} nameSearch={nameSearch} searchTerm={props.searchTerm} allClaims={allClaims} searchType={props.searchType}/>}
 
         </>
 

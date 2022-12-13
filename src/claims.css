@@ -108,6 +108,10 @@
 
 }
 
+#add-info{
+  height:150px;
+}
+
 
 
 
@@ -132,6 +136,10 @@
 
     .logo{
         display: none;
+    }
+
+    #add-info{
+      height:50px;
     }
   }
 

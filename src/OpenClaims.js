@@ -71,7 +71,7 @@ return(
 
 
 
-{showDisplay && <OpenClaimsDetails policy_number={policyToDisplay[0].policy_number} sname={policyToDisplay[0].sname} fname={policyToDisplay[0].fname} status={policyToDisplay[0].status}/>}
+{showDisplay && <OpenClaimsDetails policy_number={policyToDisplay[0].policy_number} sname={policyToDisplay[0].sname} fname={policyToDisplay[0].fname} status={policyToDisplay[0].status} additionalNotes={policyToDisplay[0].additional_notes}/>}
 
 </div>  
 

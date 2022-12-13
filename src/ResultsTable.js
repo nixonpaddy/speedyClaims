@@ -6,6 +6,8 @@ import TableRow from "./TableRow";
 
 const ResultsTable = (props) => {
 
+    
+
     const allClaims = props.allClaims;
     let searchResults = allClaims.filter((claim,index) => claim.policy_number == props.searchTerm);
 
@@ -17,8 +19,6 @@ const ResultsTable = (props) => {
     }
 
 
- 
-   
 
     
 

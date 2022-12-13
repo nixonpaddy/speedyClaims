@@ -43,7 +43,7 @@ const NewClaim = (props) => {
 
         <div>
 
-        <h1 className="heading">New Claim</h1>
+        <h1 className="heading">Add New Claim</h1>
         <br/>
         <br/>
         <div className="container" id="form-details">
@@ -71,6 +71,10 @@ const NewClaim = (props) => {
             <div className="row">
               <div className="col"><label>Phone Number:</label></div>
               <div className="col"><input type="number" id="phone-number"/><br/></div>
+            </div><br/>
+            <div className="row">
+              <div className="col"><label>Additional Notes:</label></div>
+              <div className="col"><input type="text" id="add-info"/><br/></div>
             </div><br/>
             
             <br/>
