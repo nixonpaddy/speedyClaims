@@ -1,22 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./claims.css"
-import getAllClaims from "./ClaimsData";
 import OpenClaimsDetails from "./OpenClaimsDetails";
-import{Outlet, NavLink} from "react-router-dom";
-import { useEffect } from "react";
+import PolicyDetails from "./PolicyDetails";
+
 
 
 
 
 const OpenClaims = (props) => {
 
+    const navigate = useNavigate();
+
 
     const [backToClaims, setBackToClaims] = useState(false);
     const [policyToDisplay, setPolicyToDisplay] = useState({policy_number: 0, name: "", status: ""});
     const [showDisplay, setShowDisplay] = useState(false);
 
-
-    //const allClaims = getAllClaims();
     const allClaims = props.allClaims;
     const openClaims = allClaims.filter((claim,index) =>claim.status === "open");
    
@@ -33,7 +33,8 @@ const OpenClaims = (props) => {
     setBackToClaims(false);
 
    }
-   
+
+  
 
     
 
@@ -65,27 +66,13 @@ return(
 
 
 
-
-
-
-
-
-
-{showDisplay && <OpenClaimsDetails policy_number={policyToDisplay[0].policy_number} sname={policyToDisplay[0].sname} fname={policyToDisplay[0].fname} status={policyToDisplay[0].status} additionalNotes={policyToDisplay[0].additional_notes}/>}
-
+{/* {showDisplay && <OpenClaimsDetails policy_number={policyToDisplay[0].policy_number} sname={policyToDisplay[0].sname} fname={policyToDisplay[0].fname} status={policyToDisplay[0].status} additionalNotes={policyToDisplay[0].additional_notes}/>} */}
+{showDisplay && <PolicyDetails policy={policyToDisplay[0]}  />}
 </div>  
 
 {backToClaims && <div className="back-button-container">  <button className="back-button" onClick = {hideClaim}>Back to Open Claims List</button></div>}
          
     </>
 )
-
-
-
      }
-
-
-
-
-
 export default OpenClaims;

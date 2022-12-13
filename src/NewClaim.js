@@ -13,7 +13,7 @@ const NewClaim = (props) => {
     }
     
 
-  const template = {policy_number:"", sname:"", fname:"", status:"open", }
+  const template = {policy_number:"", sname:"", fname:"", status:"open", additional_notes:"" }
 
  
   const formReducer = (state, data) => {
@@ -28,6 +28,7 @@ const NewClaim = (props) => {
   const addClaim = (event) => {
     event.preventDefault();
     props.setNewClaimsList([...props.newClaimsList, aNewClaim]);
+    alert("New claim has been added");
     
   }
 
@@ -50,17 +51,17 @@ const NewClaim = (props) => {
           <form onSubmit={addClaim}>
             <div className="row">
               <div className="col"><label>Policy Number:</label></div>
-              <div className="col"><input type="text" id="policy_number" onChange={handleChange}/><br/></div>
+              <div className="col"><input required type="text" id="policy_number" onChange={handleChange}/><br/></div>
             </div><br/>
       
             <div className="row">
               <div className="col"><label>First Name:</label></div>
-              <div className="col"><input type="text" id="fname" onChange={handleChange}/><br/></div>
+              <div className="col"><input required type="text" id="fname" onChange={handleChange}/><br/></div>
             </div><br/>
       
             <div className="row">
               <div className="col"><label>Surname:</label></div>
-              <div className="col"><input type="text" id="sname" onChange={handleChange}/><br/></div>
+              <div className="col"><input required type="text" id="sname" onChange={handleChange}/><br/></div>
             </div><br/>
       
             <div className="row">
@@ -74,7 +75,7 @@ const NewClaim = (props) => {
             </div><br/>
             <div className="row">
               <div className="col"><label>Additional Notes:</label></div>
-              <div className="col"><input type="text" id="add-info"/><br/></div>
+              <div className="col"><textarea onChange={handleChange} id="additional_notes"/><br/></div>
             </div><br/>
             
             <br/>

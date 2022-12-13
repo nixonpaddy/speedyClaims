@@ -97,8 +97,9 @@ const saveModifications = (event) => {
         </div><br/>
 
         <div className="row">
-          <div className="col"><label>Claim Status:</label></div>
-          <div className="col"><input type="text" onChange={handleNotesChange} id="add-info" defaultValue={claimTobeEdited[0].additional_notes}/></div>
+          <div className="col"><label>Additional Notes:</label></div>
+          {/* <div className="col"><input type="text" onChange={handleNotesChange} id="add-info" defaultValue={claimTobeEdited[0].additional_notes}/></div> */}
+          <div className="col"><textarea onChange={handleNotesChange} id="add-info" defaultValue={claimTobeEdited[0].additional_notes}/></div>
         </div><br/>
 
         <button>Save</button>

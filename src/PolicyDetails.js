@@ -9,7 +9,6 @@ const PolicyDetails = (props) => {
   const clickEdit = (event) => {
     event.preventDefault();
     navigate(`/editpolicy/${props.policy.policy_number}`);
-    //console.log(props.policy.policy_number)
   
 }
 

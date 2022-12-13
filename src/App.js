@@ -18,6 +18,7 @@ function App() {
   const [NameSearchTerm, setNameSearchTerm] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const[newClaimsList, setNewClaimsList] = useState(getAllClaims);
+  const[aPolicy, setAPolicy] = useState("");
 
   console.log(newClaimsList);
 
@@ -33,7 +34,7 @@ function App() {
       <Route element = {<Navigation />}>
         <Route path="/NewClaim" element={<NewClaim setNewClaimsList={setNewClaimsList} newClaimsList={newClaimsList}/>}/>
         <Route path="/Search" element={<SearchClaim searchType={searchType} setSearchType={setSearchType} setSearchTerm={setSearchTerm} searchTerm={searchTerm} nameSearchTerm={NameSearchTerm} setNameSearchTerm={setNameSearchTerm} allClaims={newClaimsList}/>}/>
-        <Route path="/OpenClaims" element={<OpenClaims allClaims={newClaimsList}/>}/>
+        <Route path="/OpenClaims" element={<OpenClaims allClaims={newClaimsList} />}/>
         <Route path="/Search/:policyNumber"  element={<SearchClaim searchType={searchType} setSearchType={setSearchType} setSearchTerm={setSearchTerm} searchTerm={searchTerm} allClaims={newClaimsList} nameSearchTerm={NameSearchTerm} setNameSearchTerm={setNameSearchTerm}/>}/>
         <Route path="/" element = { <h1 className="center">Welcome to the Claims system. Please select an option above.</h1>}/>
         <Route path="/PolicyDetails/:policyNumber"  element={<PolicyDetails />}/>
