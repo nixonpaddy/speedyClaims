@@ -1,9 +1,14 @@
 import getAllClaims from "./ClaimsData";
- import { useReducer } from "react";
+ import { useReducer, useState } from "react";
 import "./claims.css"
 import { addNewClaim } from "./ClaimsData";
+import { useNavigate } from "react-router-dom";
 
 const NewClaim = (props) => {
+  const navigate = useNavigate();
+
+  const [claimType, setClaimType] = useState("");
+  //const [number, setNumber] = useState("");
 
 
     const handleChange = (event) => {
@@ -11,9 +16,17 @@ const NewClaim = (props) => {
       dispatch({field : event.target.id, value : event.target.value});      
 
     }
+
+    
     
 
-  const template = {policy_number:"", sname:"", fname:"", status:"open", additional_notes:"" }
+
+  const template ={policynumber: props.currentPolicyNumber, sname: "", fname: "", claimdate:"", claimtype:"", 
+  vehiclemake:"", vehiclemodel:"", vehicleyear:0, 
+  propertyaddress:"",
+  animaltype:"", breedtype:"",
+  claimamount:0, reasonforclaim:"", otherinfo:"",
+  claimstatus:"Awaiting Assessment", approvedpayoutamount:"Pending"}
 
  
   const formReducer = (state, data) => {
@@ -28,14 +41,17 @@ const NewClaim = (props) => {
   const addClaim = (event) => {
     event.preventDefault();
     props.setNewClaimsList([...props.newClaimsList, aNewClaim]);
-    alert("New claim has been added");
+    alert("New claim has been added");    
+    props.setCurrentPolicyNumber(props.currentPolicyNumber+1);
+    navigate(`/`);
     
+  
   }
 
-  
 
-
-
+  const changeClaimType = (event) => {
+    setClaimType(event.target.value); 
+  }
 
 
     return(
@@ -51,7 +67,7 @@ const NewClaim = (props) => {
           <form onSubmit={addClaim}>
             <div className="row">
               <div className="col"><label>Policy Number:</label></div>
-              <div className="col"><input required type="text" id="policy_number" onChange={handleChange}/><br/></div>
+              <div className="col"><input disabled value={props.currentPolicyNumber} type="text" id="policynumber" /><br/></div>
             </div><br/>
       
             <div className="row">
@@ -65,18 +81,106 @@ const NewClaim = (props) => {
             </div><br/>
       
             <div className="row">
-              <div className="col"><label>Email:</label></div>
-              <div className="col"><input type="email" id="email" /><br/></div>
+              <div className="col"><label>Claim date:</label></div>
+              <div className="col"><input onChange={handleChange} type="date" id="claimdate" /><br/></div>
             </div><br/>
+
+            <div className="row">
+              <div className="col"><label>Claim Type:</label></div>
+              <div className="col"><select defaultValue="Select" name="claimtype" id="claimtype" onBlur={handleChange} onChange={changeClaimType}>
+              <option disabled >Select</option>
+                <option value="Motor">Motor</option>
+                <option value="Property">Property</option>
+                <option value="Pet">Pet</option>
+              </select></div>
+            </div><br/>
+
+
+           {claimType==="Property" &&
+            <> 
+                        <div className="row">
+              <div className="col"><h3>Property Details</h3></div>
+            </div><br/>
+            
+            
+            <div className="row">
+              <div className="col"><label>Address of affected Property:</label></div>
+              <div className="col"><textarea id="propertyaddress" onChange={handleChange}/><br/></div>
+            </div><br/></>}
+
+            {claimType==="Motor" &&
+             <>
+            <div className="row">
+              <div className="col"><h3>Vehicle Details</h3></div>
+            </div><br/>
+
+            <div className="row">
+              <div className="col"><label>Make:</label></div>
+              <div className="col"><input onChange={handleChange} type="text" id="vehiclemake" /><br/></div>
+            </div><br/>
+
+            <div className="row">
+              <div className="col"><label>Model:</label></div>
+              <div className="col"><input onChange={handleChange} type="text" id="vehiclemodel" /><br/></div>
+            </div><br/>
+
+            <div className="row">
+              <div className="col"><label>Year:</label></div>
+              <div className="col"><input onChange={handleChange} type="number" id="vehicleyear" /><br/></div>
+            </div><br/>
+            </>}
+
+
+            
+            {claimType==="Pet" &&
+             <>
+            <div className="row">
+              <div className="col"><h3>Pet Details</h3></div>
+            </div><br/>
+
+            <div className="row">
+              <div className="col"><label>Type of Animal:</label></div>
+              <div className="col"><input onChange={handleChange} type="text" id="animaltype" /><br/></div>
+            </div><br/>
+
+            <div className="row">
+              <div className="col"><label>Breed:</label></div>
+              <div className="col"><input onChange={handleChange} type="text" id="breedtype" /><br/></div>
+            </div><br/>
+            </>}
+
+
+
+
+
+            {claimType !=="" &&
+            <>
+            
+                        <div className="row">
+              <div className="col"><label>Estimated Claim Amount:</label></div>
+              <div className="col"><input onChange={handleChange} type="number" id="claimamount"/><br/></div>
+            </div><br/>
+
+            <div className="row">
+              <div className="col"><label>Reason for Claim:</label></div>
+              <div className="col"><textarea onChange={handleChange} id="reasonforclaim"/><br/></div>
+            </div><br/>
+
+            <div className="row">
+              <div className="col"><label>Other Info:</label></div>
+              <div className="col"><textarea onChange={handleChange} id="otherinfo"/><br/></div>
+            </div><br/> 
+            </>}
+
+
+
+            
+
+
+
       
-            <div className="row">
-              <div className="col"><label>Phone Number:</label></div>
-              <div className="col"><input type="number" id="phone-number"/><br/></div>
-            </div><br/>
-            <div className="row">
-              <div className="col"><label>Additional Notes:</label></div>
-              <div className="col"><textarea onChange={handleChange} id="additional_notes"/><br/></div>
-            </div><br/>
+
+
             
             <br/>
             <div className="submit-button"><button >Submit</button></div>

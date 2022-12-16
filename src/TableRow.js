@@ -14,9 +14,10 @@ const TableRow = (props) => {
     return(
         <>
         <tr>
-            <td>{props.claim.policy_number}</td>
+            <td>{props.claim.policynumber}</td>
+            <td>{props.claim.claimtype}</td>
             <td>{props.claim.sname}</td>
-            <td>{props.claim.status}</td>
+            <td>{props.claim.claimstatus}</td>
             <td><button onClick={showClaimDetails} >Claim Details</button></td>            
         </tr>        
         </>

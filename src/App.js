@@ -11,6 +11,7 @@ import BottomBorder from "./BottomBorder";
 import PolicyDetails from './PolicyDetails';
 import getAllClaims from './ClaimsData';
 import EditPolicy from './EditPolicy';
+import BottomText from './BottomText';
 
 function App() {
 
@@ -18,7 +19,7 @@ function App() {
   const [NameSearchTerm, setNameSearchTerm] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const[newClaimsList, setNewClaimsList] = useState(getAllClaims);
-  const[aPolicy, setAPolicy] = useState("");
+  const [currentPolicyNumber, setCurrentPolicyNumber] =useState(50);
 
   console.log(newClaimsList);
 
@@ -32,7 +33,7 @@ function App() {
 
     <Routes>
       <Route element = {<Navigation />}>
-        <Route path="/NewClaim" element={<NewClaim setNewClaimsList={setNewClaimsList} newClaimsList={newClaimsList}/>}/>
+        <Route path="/NewClaim" element={<NewClaim setNewClaimsList={setNewClaimsList} newClaimsList={newClaimsList} currentPolicyNumber={currentPolicyNumber} setCurrentPolicyNumber={setCurrentPolicyNumber}/>}/>
         <Route path="/Search" element={<SearchClaim searchType={searchType} setSearchType={setSearchType} setSearchTerm={setSearchTerm} searchTerm={searchTerm} nameSearchTerm={NameSearchTerm} setNameSearchTerm={setNameSearchTerm} allClaims={newClaimsList}/>}/>
         <Route path="/OpenClaims" element={<OpenClaims allClaims={newClaimsList} />}/>
         <Route path="/Search/:policyNumber"  element={<SearchClaim searchType={searchType} setSearchType={setSearchType} setSearchTerm={setSearchTerm} searchTerm={searchTerm} allClaims={newClaimsList} nameSearchTerm={NameSearchTerm} setNameSearchTerm={setNameSearchTerm}/>}/>
@@ -43,6 +44,7 @@ function App() {
       </Route>     
     </Routes>
     <BottomBorder />
+    <BottomText />
     </>
 
 

@@ -9,7 +9,7 @@ const ResultsTable = (props) => {
     
 
     const allClaims = props.allClaims;
-    let searchResults = allClaims.filter((claim,index) => claim.policy_number == props.searchTerm);
+    let searchResults = allClaims.filter((claim,index) => claim.policynumber == props.searchTerm);
 
     const [selectedPolicy, setSelectedPolicy] = useState("");
     const [displaySearch, setDisplaySearch] = useState("true");
@@ -34,6 +34,7 @@ const ResultsTable = (props) => {
             <thead>
                 <tr>
                 <th>Policy #</th>
+                <th>Policy Type</th>
                 <th>Surname</th>
                 <th>Status</th>
                 </tr>

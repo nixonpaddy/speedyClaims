@@ -35,6 +35,15 @@
     
 }
 
+#form-details-closed{
+  width:400px;
+  background-color: rgb(186, 186, 192);
+  padding: 20px;
+  border-radius: 10%;
+  border: 3px solid black;
+  
+}
+
 .heading{
     text-align: center;
 }
@@ -157,5 +166,9 @@
 
   li{
     list-style:none;
+  }
+
+  .bolden{
+    font-weight: bold;
   }
 

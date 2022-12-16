@@ -14,21 +14,21 @@ const OpenClaims = (props) => {
 
 
     const [backToClaims, setBackToClaims] = useState(false);
-    const [policyToDisplay, setPolicyToDisplay] = useState({policy_number: 0, name: "", status: ""});
+    const [policyToDisplay, setPolicyToDisplay] = useState({policynumber: 0, name: "", status: ""});
     const [showDisplay, setShowDisplay] = useState(false);
 
     const allClaims = props.allClaims;
-    const openClaims = allClaims.filter((claim,index) =>claim.status === "open");
+    const openClaims = allClaims.filter((claim,index) =>claim.claimstatus == "Awaiting Assessment");
    
 
    const showClaim = (event) => {
-    setPolicyToDisplay(openClaims.filter((claim,index) => claim.policy_number == event.target.value));
+    setPolicyToDisplay(openClaims.filter((claim,index) => claim.policynumber == event.target.value));
     setShowDisplay(true);  
     setBackToClaims(true);
    }
 
    const hideClaim = (event) => {
-    setPolicyToDisplay(openClaims.filter((claim,index) => claim.policy_number == event.target.value));
+    setPolicyToDisplay(openClaims.filter((claim,index) => claim.policynumber == event.target.value));
     setShowDisplay(false);  
     setBackToClaims(false);
 
@@ -55,8 +55,10 @@ return(
     {!showDisplay && <div className="oc-select-box"> <ul>
    
     {openClaims.map((claim, index) => <div key={index}>
-    <li>Policy Number:<br/> {claim.policy_number}</li> 
-    <button value = {claim.policy_number} onClick = {showClaim}>View details</button>
+    {/* <li>{claim.claimtype.charAt(0).toUpperCase() + claim.claimtype.slice(1)} Policy</li>  */}
+    <li>{claim.claimtype} Policy</li> 
+    <li>Policy # {claim.policynumber}</li> 
+    <button value = {claim.policynumber} onClick = {showClaim}>View details</button>
    
 
     <br/><br/>
