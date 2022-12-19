@@ -11,7 +11,6 @@ import BottomBorder from "./BottomBorder";
 import PolicyDetails from './PolicyDetails';
 import getAllClaims from './ClaimsData';
 import EditPolicy from './EditPolicy';
-import BottomText from './BottomText';
 
 function App() {
 
@@ -44,7 +43,6 @@ function App() {
       </Route>     
     </Routes>
     <BottomBorder />
-    <BottomText />
     </>
 
 

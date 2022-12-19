@@ -25,6 +25,8 @@ const[reasonForClaim, setReasonForClaim] = useState(claimTobeEdited[0].reasonfor
 const[vehicleMake, setVehicleMake] = useState(claimTobeEdited[0].vehiclemake);
 const[vehicleModel, setVehicleModel] = useState(claimTobeEdited[0].vehiclemodel);
 const[vehicleYear, setVehicleYear] = useState(claimTobeEdited[0].vehicleyear);
+const[claimHandlerNote, setClaimHandlerNote] = useState("");
+const[claimDiary, setClaimDiary] = useState(props.claimsList.filter((claim,index) => claim.policynumber == policy_number)[0].actionslog);
 
 
 
@@ -88,6 +90,14 @@ const handleFNameChange = (event) => {
     setVehicleYear(event.target.value);
   }
 
+  const handleClaimHandlerNoteChange = (event) => {
+    setClaimHandlerNote(new Date().toLocaleString().slice(0,10) + " - " + event.target.value);
+  }
+
+  
+
+
+
   
 
   
@@ -105,13 +115,17 @@ const saveModifications = (event) => {
     event.preventDefault();
 
     const moddedList = props.claimsList.filter((claim,index) => claim.policynumber !== policy_number);
+
+    setClaimDiary(claimDiary.push(claimHandlerNote));
    
-    props.setNewClaimsList([...moddedList, {policynumber:policy_number, fname:fName, sname:sName, claimstatus:status, otherinfo:notes, animaltype:animalType, approvedpayoutamount:approvedPayoutAmount, breedtype:breedType, claimamount:claimAmount, claimdate:claimDate, claimtype:claimType, propertyaddress:propertyAddress, reasonforclaim:reasonForClaim, vehiclemake:vehicleMake, vehiclemodel:vehicleModel, vehicleyear:vehicleYear}  ]);
+    props.setNewClaimsList([...moddedList, {policynumber:policy_number, fname:fName, sname:sName, claimstatus:status, otherinfo:notes, animaltype:animalType, approvedpayoutamount:approvedPayoutAmount, breedtype:breedType, claimamount:claimAmount, claimdate:claimDate, claimtype:claimType, propertyaddress:propertyAddress, reasonforclaim:reasonForClaim, vehiclemake:vehicleMake, vehiclemodel:vehicleModel, vehicleyear:vehicleYear, actionslog:claimDiary}  ]);
 
+    
+    
     alert("Claim Details have been modified");
-
     navigate("/OpenClaims");
-  
+
+    console.log(claimDiary);
 
 
 }
@@ -257,6 +271,12 @@ const saveModifications = (event) => {
         <div className="row">
           <div className="col"><label>Approved Payout Amount (£):</label></div>
           <div className="col"><input type="text" id="animaltype" defaultValue={claimTobeEdited[0].approvedpayoutamount} onChange={handleApprovedPayoutChange}/></div>
+        </div><br/>
+
+
+        <div className="row">
+          <div className="col"><label>Claims Handler Note:</label></div>
+          <div className="col"><input type="text" id="animaltype"  onChange={handleClaimHandlerNoteChange}/></div>
         </div><br/>
 
 

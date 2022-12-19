@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
 
 const PolicyDetails = (props) => {
+  const [displayLog, setDisplayLog] = useState(false);
 
   const navigate = useNavigate();
 
@@ -17,6 +19,11 @@ const canBeEdited = () => {
     return false;
   }
   return true;
+}
+
+const logDisplay = (event) => {
+  event.preventDefault();
+  setDisplayLog(!displayLog);
 }
 
 
@@ -115,13 +122,13 @@ const canBeEdited = () => {
               <div className="col"><span> {props.policy.approvedpayoutamount !=="Pending" && `£`} {props.policy.approvedpayoutamount}</span><br/></div>
             </div><br/>
 
-         
-            {canBeEdited() && <div className="center" ><button >Edit Details</button></div>}
 
+            <div className="row">
+              <div className="col">{canBeEdited() && <div className="center" ><button >Edit Claim</button></div>}</div>
+              <div className="col"><div className="center" ><button onClick={logDisplay} >{!displayLog ? "Show" : "Hide"} Log Details</button></div><br/></div>
+            </div>
 
-          
-
-
+      
             {!canBeEdited() && <div className="center"><h1>Claim Closed</h1></div>}
       
             
@@ -130,6 +137,25 @@ const canBeEdited = () => {
           </form>
         </div>
         <br/>
+
+        {displayLog && <><h2 className="center">Log</h2>
+        <div className="container" id="form-details">
+
+
+        <ul>
+   
+   {props.policy.actionslog.map((claim, index) => <div key={index}>
+   <li><strong>{claim.slice(0,10)}</strong>{claim.slice(10)}</li>   
+
+   </div>)}
+
+   </ul>
+
+
+
+        </div></>}
+
+    
 
         
 

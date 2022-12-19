@@ -26,7 +26,8 @@ const NewClaim = (props) => {
   propertyaddress:"",
   animaltype:"", breedtype:"",
   claimamount:0, reasonforclaim:"", otherinfo:"",
-  claimstatus:"Awaiting Assessment", approvedpayoutamount:"Pending"}
+  claimstatus:"Awaiting Assessment", approvedpayoutamount:"Pending",
+  actionslog:[new Date().toLocaleString().slice(0,10) + "- Claim Created"]}
 
  
   const formReducer = (state, data) => {
