@@ -57,7 +57,7 @@ const allClaims=[
     animaltype:"", breedtype:"",
     claimamount:3000, reasonforclaim:"Rear-ended by uninsured driver", otherinfo:"",
     claimstatus:"Escalated", approvedpayoutamount:"Pending",
-    actionslog:[new Date().toLocaleString().slice(0,10) + "11/03/2022- Claim Created"]},
+    actionslog:["11/03/2022- Claim Created", "11/06/2022 - Escalated to main platform"]},
 
     
 ]

@@ -177,7 +177,7 @@ const saveModifications = (event) => {
 
 
 
-        {claimType == "property" && 
+        {claimType == "Property" && 
         <>
         
         <div className="row">
@@ -189,7 +189,7 @@ const saveModifications = (event) => {
         }
 
 
-        {claimType == "motor" &&
+        {claimType == "Motor" &&
 
         <>
                 <div className="row">
@@ -213,7 +213,7 @@ const saveModifications = (event) => {
         }
 
 
-         {claimType == "pet" &&
+         {claimType == "Pet" &&
 
          <>
           <div className="row">

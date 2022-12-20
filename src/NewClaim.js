@@ -22,7 +22,7 @@ const NewClaim = (props) => {
 
 
   const template ={policynumber: props.currentPolicyNumber, sname: "", fname: "", claimdate:"", claimtype:"", 
-  vehiclemake:"", vehiclemodel:"", vehicleyear:0, 
+  vehiclemake:"", vehiclemodel:"", vehicleyear:"", 
   propertyaddress:"",
   animaltype:"", breedtype:"",
   claimamount:0, reasonforclaim:"", otherinfo:"",

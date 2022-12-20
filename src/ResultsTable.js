@@ -52,7 +52,7 @@ const ResultsTable = (props) => {
 
         </div></>}
 
-        {selectedPolicy !== "" && <><h2 className="center">Policy Details</h2> <PolicyDetails policy={searchResults[selectedPolicy]}/></>}
+        {selectedPolicy !== "" && <><h2 className="center">Claim Details</h2> <PolicyDetails policy={searchResults[selectedPolicy]}/></>}
 
         </>
     )

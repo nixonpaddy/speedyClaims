@@ -45,6 +45,7 @@ const carryOutSearch = (event) => {
 const clearSearch = (event) => {
   event.preventDefault();
   props.setSearchTerm("");
+  props.setNameSearchTerm("");
   navigate(`/search`);
   setPolicySearchTerm(""); 
   setNameSearch("");
@@ -65,9 +66,6 @@ const oneTermEntered = () => {
 
 
 
-
-
-
     return(
 
         <>
@@ -77,7 +75,8 @@ const oneTermEntered = () => {
         <br/>
         <div className="container" id="form-details">
           <form onSubmit={carryOutSearch}>
-            <div className="row">
+            { props.nameSearchTerm == "" && props.searchTerm == "" &&
+            <><div className="row">
               <div className="col"><label>Search by Policy Number:</label></div>
               <div className="col"><input type="text" disabled={searchBoxes} onChange={handleChange} onKeyUp={oneTermEntered} value={policySearchTerm}/><br/></div>
             </div><br/>
@@ -94,7 +93,7 @@ const oneTermEntered = () => {
                   
             <br/>
             <div className="submit-button"><button disabled={!oneTerm}>Search</button></div>
-            <br/>
+            <br/></>}
             <div className="submit-button"><button onClick={clearSearch}>Clear Search</button></div>
           </form>
         </div>
