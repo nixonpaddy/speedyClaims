@@ -1,133 +1,68 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 
 const EditPolicy = (props) => {
 
+  const formReducer = (state, data) => {
+    return {...state, [data.field] : data.value}
+}
+
+
+    const handleChange = (event) => {
+    dispatch({field:event.target.id, value:event.target.value})
+    console.log(newClaim);
+        
+  }
     
 const navigate = useNavigate();
 const {policyNumber} = useParams();
 const claimTobeEdited = props.claimsList.filter((claim,index) => claim.policynumber == policyNumber);
-const[policy_number,setPolicyNumber] = useState(claimTobeEdited[0].policynumber);
-const[fName, setFName] = useState(claimTobeEdited[0].fname);
-const[sName, setSName] = useState(claimTobeEdited[0].sname);
-const[status, setStatus] = useState(claimTobeEdited[0].claimstatus);
-const[notes, setNotes] = useState(claimTobeEdited[0].otherinfo);
-const[animalType, setAnimalType] = useState(claimTobeEdited[0].animaltype);
-const[approvedPayoutAmount, setApprovedPayoutAmount] = useState(claimTobeEdited[0].approvedpayoutamount);
-const[breedType, setBreedType] = useState(claimTobeEdited[0].breedtype);
-const[claimAmount, setClaimAmount] = useState(claimTobeEdited[0].claimamount);
-const[claimDate, setClaimDate] = useState(claimTobeEdited[0].claimdate);
 const[claimType, setClaimType] = useState(claimTobeEdited[0].claimtype);
-const[propertyAddress, setPropertyAddress] = useState(claimTobeEdited[0].propertyaddress);
-const[reasonForClaim, setReasonForClaim] = useState(claimTobeEdited[0].reasonforclaim);
-const[vehicleMake, setVehicleMake] = useState(claimTobeEdited[0].vehiclemake);
-const[vehicleModel, setVehicleModel] = useState(claimTobeEdited[0].vehiclemodel);
-const[vehicleYear, setVehicleYear] = useState(claimTobeEdited[0].vehicleyear);
 const[claimHandlerNote, setClaimHandlerNote] = useState("");
-const[claimDiary, setClaimDiary] = useState(props.claimsList.filter((claim,index) => claim.policynumber == policy_number)[0].actionslog);
+const[claimDiary, setClaimDiary] = useState(props.claimsList.filter((claim,index) => claim.policynumber == claimTobeEdited[0].policynumber)[0].actionslog);
 
 
+const initialClaimState = {policynumber:claimTobeEdited[0].policynumber, fname:claimTobeEdited[0].fname, sname:claimTobeEdited[0].sname, claimstatus:claimTobeEdited[0].claimstatus, 
+    otherinfo:claimTobeEdited[0].otherinfo, animaltype:claimTobeEdited[0].animaltype, approvedpayoutamount:claimTobeEdited[0].approvedpayoutamount, breedtype:claimTobeEdited[0].breedtype, 
+    claimamount:claimTobeEdited[0].claimamount, claimdate:claimTobeEdited[0].claimdate, claimtype:claimTobeEdited[0].claimtype, propertyaddress:claimTobeEdited[0].propertyaddress, reasonforclaim:claimTobeEdited[0].reasonforclaim, 
+    vehiclemake:claimTobeEdited[0].vehiclemake, vehiclemodel:claimTobeEdited[0].vehiclemodel, vehicleyear:claimTobeEdited[0].vehicleyear, actionslog:claimDiary}
 
-const handleFNameChange = (event) => {
-    setFName(event.target.value);
-  }
 
-  const handleSNameChange = (event) => {
-    setSName(event.target.value);
-  }
+const [newClaim, dispatch] = useReducer(formReducer, initialClaimState);
+  
 
-  const handleStatusChange = (event) => {
-    setStatus(event.target.value);
-  }
-
-  const handleNotesChange = (event) => {
-    setNotes(event.target.value);
-  }
-
-  const handleAnimalTypeChange = (event) => {
-    setAnimalType(event.target.value);
-  }
-
-  const handleApprovedPayoutChange = (event) => {
-    setApprovedPayoutAmount(event.target.value);
-  }
-
-  const handleBreedTypeChange = (event) => {
-    setBreedType(event.target.value);
-  }
-
-  const handleClaimAmountChange = (event) => {
-    setClaimAmount(event.target.value);
-  }
-
-  const handleClaimDateChange = (event) => {
-    setClaimDate(event.target.value);
-  }
-
-  const handleClaimTypeChange = (event) => {
-    setClaimType(event.target.value);
-  }
-
-  const handlePropertyAddressChange = (event) => {
-    setPropertyAddress(event.target.value);
-  }
-
-  const handleReasonForClaimChange = (event) => {
-    setReasonForClaim(event.target.value);
-  }
-
-  const handleVehicleMakeChange = (event) => {
-    setVehicleMake(event.target.value);
-  }
-
-  const handleVehicleModelChange = (event) => {
-    setVehicleModel(event.target.value);
-  }
-
-  const handleVehicleYearChange = (event) => {
-    setVehicleYear(event.target.value);
-  }
-
-  const handleClaimHandlerNoteChange = (event) => {
+const handleClaimHandlerNoteChange = (event) => {
     setClaimHandlerNote(new Date().toLocaleString().slice(0,10) + " - " + event.target.value);
   }
-
-  
-
-
-
-  
-
-  
-
-
-
-
-
-
-
 
 
 const saveModifications = (event) => {
 
     event.preventDefault();
 
-    const moddedList = props.claimsList.filter((claim,index) => claim.policynumber !== policy_number);
+    const moddedList = props.claimsList.filter((claim,index) => claim.policynumber !== claimTobeEdited[0].policynumber);
+    
 
     setClaimDiary(claimDiary.push(claimHandlerNote));
+    newClaim.actionslog = claimDiary;   
    
-    props.setNewClaimsList([...moddedList, {policynumber:policy_number, fname:fName, sname:sName, claimstatus:status, otherinfo:notes, animaltype:animalType, approvedpayoutamount:approvedPayoutAmount, breedtype:breedType, claimamount:claimAmount, claimdate:claimDate, claimtype:claimType, propertyaddress:propertyAddress, reasonforclaim:reasonForClaim, vehiclemake:vehicleMake, vehiclemodel:vehicleModel, vehicleyear:vehicleYear, actionslog:claimDiary}  ]);
-
+    props.setNewClaimsList([...moddedList, newClaim]);
     
+
     
     alert("Claim Details have been modified");
+    props.clearSearch();
     navigate("/OpenClaims");
 
-    console.log(claimDiary);
+}
 
 
+const policyTypeChange = (event) => {
+  
+  setClaimType(event.target.value);
+  handleChange(event);
 }
 
 
@@ -137,34 +72,37 @@ const saveModifications = (event) => {
     <div>
 
 
-    <div className="container" id="form-details">
-        
-      <form onSubmit = {saveModifications}>
+    <div className="container" id="form-details">      
+
+
+
+
+<form onSubmit = {saveModifications}>
         <div className="row">
           <div className="col"><label>Policy Number:</label></div>
-          <div className="col"><div className="col"><input disabled={true} type="text" id="policy_number" defaultValue={claimTobeEdited[0].policynumber}/><br/></div><br/></div>
+          <div className="col"><div className="col"><input disabled={true} type="text" id="policynumber" defaultValue={claimTobeEdited[0].policynumber}/><br/></div><br/></div>
         </div><br/>
   
         <div className="row">
           <div className="col"><label>First Name:</label></div>
-          <div className="col"><input type="text" onChange={handleFNameChange} id="first-name" defaultValue={claimTobeEdited[0].fname}/><br/></div>
+          <div className="col"><input type="text" onChange={handleChange} id="fname" value={newClaim.fname}/><br/></div>
         </div><br/>
   
         <div className="row">
           <div className="col"><label>Surname:</label></div>
-          <div className="col"><input type="text" onChange={handleSNameChange} id="surname" defaultValue={claimTobeEdited[0].sname}/><br/></div>
+          <div className="col"><input type="text" onChange={handleChange} id="sname" defaultValue={claimTobeEdited[0].sname}/><br/></div>
         </div><br/>
   
 
 
         <div className="row">
           <div className="col"><label>Claim Date:</label></div>
-          <div className="col"><input type="date"  id="claimdate" defaultValue={claimTobeEdited[0].claimdate} onChange={handleClaimDateChange}/></div>
+          <div className="col"><input type="date"  id="claimdate" defaultValue={claimTobeEdited[0].claimdate} onChange={handleChange}/></div>
         </div><br/>
 
         <div className="row">
           <div className="col"><label>Claim Type:</label></div>
-          <div className="col"><select defaultValue={claimTobeEdited[0].claimtype} name="claimtype" id="claimtype" onChange={handleClaimTypeChange}>
+          <div className="col"><select defaultValue={claimTobeEdited[0].claimtype} name="claimtype" id="claimtype" onChange={policyTypeChange} >
               <option disabled >Select</option>
                 <option value="Motor">Motor</option>
                 <option value="Property">Property</option>
@@ -182,7 +120,7 @@ const saveModifications = (event) => {
         
         <div className="row">
           <div className="col"><label>Address of Property:</label></div>
-          <div className="col"><textarea  id="address" defaultValue={claimTobeEdited[0].propertyaddress} onChange={handlePropertyAddressChange}/></div>
+          <div className="col"><textarea  id="propertyaddress" defaultValue={claimTobeEdited[0].propertyaddress} onChange={handleChange}/></div>
         </div><br/>        
         </>
         
@@ -194,17 +132,17 @@ const saveModifications = (event) => {
         <>
                 <div className="row">
           <div className="col"><label>Vehicle Make:</label></div>
-          <div className="col"><input type="text"  id="vehiclemake" defaultValue={claimTobeEdited[0].vehiclemake} onChange={handleVehicleMakeChange}/></div>
+          <div className="col"><input type="text"  id="vehiclemake" defaultValue={claimTobeEdited[0].vehiclemake} onChange={handleChange}/></div>
         </div><br/>
 
         <div className="row">
           <div className="col"><label>Vehicle Model:</label></div>
-          <div className="col"><input type="text"  id="vehiclemodel" defaultValue={claimTobeEdited[0].vehiclemodel} onChange={handleVehicleModelChange}/></div>
+          <div className="col"><input type="text"  id="vehiclemodel" defaultValue={claimTobeEdited[0].vehiclemodel} onChange={handleChange}/></div>
         </div><br/>
 
         <div className="row">
           <div className="col"><label>Vehicle Year:</label></div>
-          <div className="col"><input type="number"  id="vehicleyear" defaultValue={claimTobeEdited[0].vehicleyear} onChange={handleVehicleYearChange}/></div>
+          <div className="col"><input type="number"  id="vehicleyear" defaultValue={claimTobeEdited[0].vehicleyear} onChange={handleChange}/></div>
         </div><br/>
 
         </>
@@ -218,12 +156,12 @@ const saveModifications = (event) => {
          <>
           <div className="row">
           <div className="col"><label>Animal Type:</label></div>
-          <div className="col"><input type="text"  id="animaltype" defaultValue={claimTobeEdited[0].animaltype} onChange={handleAnimalTypeChange}/></div>
+          <div className="col"><input type="text"  id="animaltype" defaultValue={claimTobeEdited[0].animaltype} onChange={handleChange}/></div>
         </div><br/>
 
         <div className="row">
           <div className="col"><label>Breed:</label></div>
-          <div className="col"><input type="text"  id="breed" defaultValue={claimTobeEdited[0].breedtype} onChange={handleBreedTypeChange}/></div>
+          <div className="col"><input type="text"  id="breedtype" defaultValue={claimTobeEdited[0].breedtype} onChange={handleChange}/></div>
         </div><br/>
          </>
 
@@ -238,12 +176,12 @@ const saveModifications = (event) => {
 
         <div className="row">
           <div className="col"><label>Claim Amount (£):</label></div>
-          <div className="col"><input type="number"  id="claimamount" defaultValue={claimTobeEdited[0].claimamount} onChange={handleClaimAmountChange}/></div>
+          <div className="col"><input type="number"  id="claimamount" defaultValue={claimTobeEdited[0].claimamount} onChange={handleChange}/></div>
         </div><br/>
 
         <div className="row">
           <div className="col"><label>Reason for Claim:</label></div>
-          <div className="col"><textarea  id="animaltype" defaultValue={claimTobeEdited[0].reasonforclaim} onChange={handleReasonForClaimChange}/></div>
+          <div className="col"><textarea  id="reasonforclaim" defaultValue={claimTobeEdited[0].reasonforclaim} onChange={handleChange}/></div>
         </div><br/>
 
 
@@ -253,12 +191,12 @@ const saveModifications = (event) => {
 
         <div className="row">
           <div className="col"><label>Additional Notes:</label></div>         
-          <div className="col"><textarea onChange={handleNotesChange} id="add-info" defaultValue={claimTobeEdited[0].otherinfo}/></div>
+          <div className="col"><textarea onChange={handleChange} id="otherinfo" defaultValue={claimTobeEdited[0].otherinfo}/></div>
         </div><br/>
 
         <div className="row">
           <div className="col"><label>Claim Status:</label></div>
-          <div className="col"><select defaultValue={claimTobeEdited[0].claimstatus} name="claimstatus" id="claimstatus" onChange={handleStatusChange}>
+          <div className="col"><select defaultValue={claimTobeEdited[0].claimstatus} name="claimstatus" id="claimstatus" onChange={handleChange}>
                 <option value="Awaiting Assessment">Awaiting Initial Assessment</option>
                 <option value="In Progress">In Progress</option>
                 <option value="Rejected">Rejected</option>
@@ -270,14 +208,20 @@ const saveModifications = (event) => {
 
         <div className="row">
           <div className="col"><label>Approved Payout Amount (£):</label></div>
-          <div className="col"><input type="text" id="animaltype" defaultValue={claimTobeEdited[0].approvedpayoutamount} onChange={handleApprovedPayoutChange}/></div>
+          <div className="col"><input type="text" id="approvedpayoutamount" defaultValue={claimTobeEdited[0].approvedpayoutamount} onChange={handleChange}/></div>
         </div><br/>
 
 
         <div className="row">
           <div className="col"><label>Claims Handler Note:</label></div>
-          <div className="col"><input type="text" id="animaltype"  onChange={handleClaimHandlerNoteChange}/></div>
+          <div className="col"><input type="text" id=""  onChange={handleClaimHandlerNoteChange}/></div>
         </div><br/>
+
+
+
+
+
+
 
 
 

@@ -41,7 +41,7 @@ const allClaims=[
     animaltype:"Dog", breedtype:"Jack Russell",
     claimamount:500, reasonforclaim:"Vet Bills", otherinfo:"",
     claimstatus:"Rejected", approvedpayoutamount:0,
-    actionslog:[ "12/17/2022- Claim Created"]},
+    actionslog:[ "12/17/2022 - Claim Created", "12/19/2022 - Dog recovered without needing surgery"]},
 
     {policynumber: 6, sname: "Laughlin", fname: "Chris", claimdate:"2022-10-14", claimtype:"Motor", 
     vehiclemake:"Peugeot", vehiclemodel:"306", vehicleyear:2012, 

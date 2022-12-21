@@ -22,6 +22,11 @@ function App() {
 
   console.log(newClaimsList);
 
+  const clearSearch = () => {
+    setSearchTerm(""); 
+    setNameSearchTerm("");
+  }
+
   
  
  
@@ -39,7 +44,7 @@ function App() {
         <Route path="/" element = { <h1 className="center">Welcome to the Claims system. Please select an option above.</h1>}/>
         <Route path="/PolicyDetails/:policyNumber"  element={<PolicyDetails />}/>
         <Route path="*"  element={<h1 className="center">This page does not exist</h1>}/>
-        <Route path="/editpolicy/:policyNumber"  element={<EditPolicy  claimsList={newClaimsList} setNewClaimsList={setNewClaimsList}/>}/>
+        <Route path="/editpolicy/:policyNumber"  element={<EditPolicy  claimsList={newClaimsList} setNewClaimsList={setNewClaimsList} clearSearch={clearSearch}/>}/>
       </Route>     
     </Routes>
     <BottomBorder />
