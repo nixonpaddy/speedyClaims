@@ -8,7 +8,6 @@ const NewClaim = (props) => {
   const navigate = useNavigate();
 
   const [claimType, setClaimType] = useState("");
-  //const [number, setNumber] = useState("");
 
 
     const handleChange = (event) => {
@@ -27,7 +26,8 @@ const NewClaim = (props) => {
   animaltype:"", breedtype:"",
   claimamount:0, reasonforclaim:"", otherinfo:"",
   claimstatus:"Awaiting Assessment", approvedpayoutamount:"Pending",
-  actionslog:[new Date().toLocaleString().slice(0,10) + "- Claim Created"]}
+  actionslog:[new Date().toLocaleString().slice(0,10) + "- Claim Created"],
+  tasks:[]}
 
  
   const formReducer = (state, data) => {

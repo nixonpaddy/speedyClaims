@@ -52,6 +52,28 @@ export const EditPolicy = (props) => {
     tasks: tasks,
   };
 
+  const outstandingTasks = claimTobeEdited[0].tasks.filter((task,index) => task.taskstatus == "Outstanding");
+
+  // const showApprove = () => {
+  //   if(outstandingTasks.length>0){
+  //     return false;
+  //   }
+  //   return true;
+
+  // }
+
+  let showApprove = true;
+
+  if(outstandingTasks.length > 0){
+    showApprove=false;
+  }
+
+  
+  console.log(outstandingTasks.length)
+
+  
+ 
+
   const [newClaim, dispatch] = useReducer(formReducer, initialClaimState);
 
   const handleClaimHandlerNoteChange = (event) => {
@@ -347,10 +369,10 @@ export const EditPolicy = (props) => {
                 </option>
                 <option value="In Progress">In Progress</option>
                 <option value="Rejected">Rejected</option>
-                <option value="Accepted - Awaiting Payment">
+                <option  disabled={!showApprove} value="Accepted - Awaiting Payment">
                   Accepted - Awaiting Payment
                 </option>
-                <option value="Accepted - Paid">Accepted - Paid</option>
+                <option disabled={!showApprove} value="Accepted - Paid">Accepted - Paid</option>
                 <option value="Escalated">Escalated</option>
               </select>
             </div>
