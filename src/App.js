@@ -11,6 +11,7 @@ import BottomBorder from "./BottomBorder";
 import PolicyDetails from './PolicyDetails';
 import getAllClaims from './ClaimsData';
 import EditPolicy from './EditPolicy';
+import ArchivedClaims from './ArchivedClaims';
 
 function App() {
 
@@ -42,9 +43,10 @@ function App() {
         <Route path="/OpenClaims" element={<OpenClaims allClaims={newClaimsList} />}/>
         <Route path="/Search/:policyNumber"  element={<SearchClaim searchType={searchType} setSearchType={setSearchType} setSearchTerm={setSearchTerm} searchTerm={searchTerm} allClaims={newClaimsList} nameSearchTerm={NameSearchTerm} setNameSearchTerm={setNameSearchTerm}/>}/>
         <Route path="/" element = { <h1 className="center">Welcome to the Claims system. Please select an option above.</h1>}/>
-        <Route path="/PolicyDetails/:policyNumber"  element={<PolicyDetails />}/>
+        <Route path="/PolicyDetails/:policyNumber"  element={<PolicyDetails  />}/>
         <Route path="*"  element={<h1 className="center">This page does not exist</h1>}/>
         <Route path="/editpolicy/:policyNumber"  element={<EditPolicy  claimsList={newClaimsList} setNewClaimsList={setNewClaimsList} clearSearch={clearSearch}/>}/>
+        <Route path="/archived"  element={<ArchivedClaims allClaims={newClaimsList} />}/>
       </Route>     
     </Routes>
     <BottomBorder />
