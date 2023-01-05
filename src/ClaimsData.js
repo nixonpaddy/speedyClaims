@@ -19,7 +19,7 @@ const allClaims=[
     claimamount:250, reasonforclaim:"Expensive Hamster. Escaped out the back door", otherinfo:"Hamster imported from Timbucktoo",
     claimstatus:"Awaiting Assessment", approvedpayoutamount:"Pending",
     actionslog:["10/29/2022 - Claim Created"],
-    tasks:[]},
+    tasks:[{task: "send picture of animal", taskstatus: "Completed"}, {task: "send in proof of ownership", taskstatus: "Outstanding"}, {task: "send in ID", taskstatus: "Outstanding"}]},
 
     {policynumber: 3, sname: "Quinn", fname: "Anne Marie", claimdate:"2022-11-19", claimtype:"Property", 
     vehiclemake:"", vehiclemodel:"", vehicleyear:"", 
@@ -37,7 +37,7 @@ const allClaims=[
     claimamount:350, reasonforclaim:"Golfball came through a large window in the sun-room", otherinfo:"Fore!",
     claimstatus:"Accepted - Awaiting Payment", approvedpayoutamount:200,
     actionslog:["09/19/2022 - Claim Created", "10/01/2022 - Claim reviewed. Passed to adjustors", "10/07/2022 - Requested photo evidence from claimant", "11/10/2022 - evidence received, passed for approval", "11/25/2022 - 200 approved"],
-    tasks:[]},
+    tasks:[{task: "send photos of damage", taskstatus: "Completed"}, {task: "send in quote for repairs", taskstatus: "Completed"}]},
 
     {policynumber: 5, sname: "Doherty", fname: "Rachel", claimdate:"2022-06-25", claimtype:"Pet", 
     vehiclemake:"", vehiclemodel:"", vehicleyear:"", 
@@ -46,7 +46,7 @@ const allClaims=[
     claimamount:500, reasonforclaim:"Vet Bills", otherinfo:"",
     claimstatus:"Rejected", approvedpayoutamount:0,
     actionslog:[ "12/17/2022 - Claim Created", "12/19/2022 - Dog recovered without needing surgery"],
-    tasks:[]},
+    tasks:[{task: "Send in Vets report", taskstatus: "Completed"}]},
 
     {policynumber: 6, sname: "Laughlin", fname: "Chris", claimdate:"2022-10-14", claimtype:"Motor", 
     vehiclemake:"Peugeot", vehiclemodel:"306", vehicleyear:2012, 
@@ -55,7 +55,7 @@ const allClaims=[
     claimamount:200, reasonforclaim:"Wing mirror needs replaced after clipping a lamp post", otherinfo:"The lamp post is ok",
     claimstatus:"Accepted - Paid", approvedpayoutamount:200,
     actionslog:["10/19/2022- Claim Created", "10/22/2022 - Evidence requested from claimant", "11/01/2022 - Evidenced received, passed for approval", "11/09/2022 - Approval confirmed for £200", "11/15/2022 - Funds sent to claimand bank. Claim closed down"],
-    tasks:[]},
+    tasks:[{task: "send photos of damage", taskstatus: "Completed"}, {task: "send in quote for repairs", taskstatus: "Completed"}]},
 
     {policynumber: 7, sname: "Williamson", fname: "Mark", claimdate:"2022-09-28", claimtype:"Motor", 
     vehiclemake:"Lamborghini", vehiclemodel:"Galardo", vehicleyear:2019, 

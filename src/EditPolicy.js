@@ -12,7 +12,7 @@ export const EditPolicy = (props) => {
  
   const handleChange = (event) => {
     dispatch({ field: event.target.id, value: event.target.value });
-    console.log(newClaim);
+    //console.log(newClaim);
   };
 
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ export const EditPolicy = (props) => {
     )[0].actionslog
   );
   const [tasks, setTasks] = useState(claimTobeEdited[0].tasks);
-   //console.log({tasks})
+  
   const [newTask, setNewTask] = useState("");
 
   const initialClaimState = {
@@ -54,13 +54,6 @@ export const EditPolicy = (props) => {
 
   const outstandingTasks = claimTobeEdited[0].tasks.filter((task,index) => task.taskstatus == "Outstanding");
 
-  // const showApprove = () => {
-  //   if(outstandingTasks.length>0){
-  //     return false;
-  //   }
-  //   return true;
-
-  // }
 
   let showApprove = true;
 
