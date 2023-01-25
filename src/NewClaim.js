@@ -16,18 +16,19 @@ const NewClaim = (props) => {
 
     }
 
+    //console.log(props.newClaimsList.length);
+
     
     
+//policyNumber: props.currentPolicyNumber
 
-
-  const template ={policynumber: props.currentPolicyNumber, sname: "", fname: "", claimdate:"", claimtype:"", 
-  vehiclemake:"", vehiclemodel:"", vehicleyear:"", 
-  propertyaddress:"",
-  animaltype:"", breedtype:"",
-  claimamount:0, reasonforclaim:"", otherinfo:"",
-  claimstatus:"Awaiting Assessment", approvedpayoutamount:"Pending",
-  actionslog:[new Date().toLocaleString().slice(0,10) + "- Claim Created"],
-  tasks:[]}
+  const template ={surname: "", firstName: "", claimDate:"", claimType:"", 
+  vehicleMake:"", vehicleModel:"", vehicleYear:"", 
+  propertyAddress:"",
+  animalType:"", breedType:"",
+  claimAmount:0, reasonForClaim:"", otheriInfo:"",
+  claimStatus:"Awaiting Assessment", approvedPayoutAmount:"Pending",
+  actions:[{actionTaken : new Date().toLocaleString().slice(0,10) + "   - Claim Created", actionPolicyNumber : props.newClaimsList.length}]}
 
  
   const formReducer = (state, data) => {
@@ -39,15 +40,44 @@ const NewClaim = (props) => {
 
 
 
+  // const addClaim = (event) => {
+  //   event.preventDefault();
+  //   props.setNewClaimsList([...props.newClaimsList, aNewClaim]);
+  //   alert("New claim has been added");    
+  //   props.setCurrentPolicyNumber(props.currentPolicyNumber+1);
+  //   navigate(`/`);  
+  
+  // }
+
+
   const addClaim = (event) => {
     event.preventDefault();
-    props.setNewClaimsList([...props.newClaimsList, aNewClaim]);
-    alert("New claim has been added");    
-    props.setCurrentPolicyNumber(props.currentPolicyNumber+1);
-    navigate(`/`);
-    
-  
-  }
+    console.log(aNewClaim);
+    addNewClaim(aNewClaim)
+        .then( response => {
+            if (response.status === 200) {
+                alert("New transaction added with id " + response.data.policyNumber);
+                navigate(`/`); 
+                props.loadData();
+            }
+            else {
+                console.log("Something went wrong - status code was " + response.status);
+            }
+            
+        } )
+        .catch( error => {
+            console.log("Something went wrong - " + error);
+        })
+} 
+
+
+
+
+
+
+
+
+
 
 
   const changeClaimType = (event) => {
@@ -68,27 +98,27 @@ const NewClaim = (props) => {
           <form onSubmit={addClaim}>
             <div className="row">
               <div className="col"><label>Policy Number:</label></div>
-              <div className="col"><input disabled value={props.currentPolicyNumber} type="text" id="policynumber" /><br/></div>
+              <div className="col"><input disabled value={props.currentPolicyNumber} type="text" id="policyNumber" /><br/></div>
             </div><br/>
       
             <div className="row">
               <div className="col"><label>First Name:</label></div>
-              <div className="col"><input required type="text" id="fname" onChange={handleChange}/><br/></div>
+              <div className="col"><input required type="text" id="firstName" onChange={handleChange}/><br/></div>
             </div><br/>
       
             <div className="row">
               <div className="col"><label>Surname:</label></div>
-              <div className="col"><input required type="text" id="sname" onChange={handleChange}/><br/></div>
+              <div className="col"><input required type="text" id="surname" onChange={handleChange}/><br/></div>
             </div><br/>
       
             <div className="row">
               <div className="col"><label>Claim date:</label></div>
-              <div className="col"><input onChange={handleChange} type="date" id="claimdate" /><br/></div>
+              <div className="col"><input onChange={handleChange} type="date" id="claimDate" /><br/></div>
             </div><br/>
 
             <div className="row">
               <div className="col"><label>Claim Type:</label></div>
-              <div className="col"><select defaultValue="Select" name="claimtype" id="claimtype" onBlur={handleChange} onChange={changeClaimType}>
+              <div className="col"><select defaultValue="Select" name="claimtype" id="claimType" onBlur={handleChange} onChange={changeClaimType}>
               <option disabled >Select</option>
                 <option value="Motor">Motor</option>
                 <option value="Property">Property</option>
@@ -106,7 +136,7 @@ const NewClaim = (props) => {
             
             <div className="row">
               <div className="col"><label>Address of affected Property:</label></div>
-              <div className="col"><textarea id="propertyaddress" onChange={handleChange}/><br/></div>
+              <div className="col"><textarea id="propertyAddress" onChange={handleChange}/><br/></div>
             </div><br/></>}
 
             {claimType==="Motor" &&
@@ -117,17 +147,17 @@ const NewClaim = (props) => {
 
             <div className="row">
               <div className="col"><label>Make:</label></div>
-              <div className="col"><input onChange={handleChange} type="text" id="vehiclemake" /><br/></div>
+              <div className="col"><input onChange={handleChange} type="text" id="vehicleMake" /><br/></div>
             </div><br/>
 
             <div className="row">
               <div className="col"><label>Model:</label></div>
-              <div className="col"><input onChange={handleChange} type="text" id="vehiclemodel" /><br/></div>
+              <div className="col"><input onChange={handleChange} type="text" id="vehicleModel" /><br/></div>
             </div><br/>
 
             <div className="row">
               <div className="col"><label>Year:</label></div>
-              <div className="col"><input onChange={handleChange} type="number" id="vehicleyear" /><br/></div>
+              <div className="col"><input onChange={handleChange} type="number" id="vehicleYear" /><br/></div>
             </div><br/>
             </>}
 
@@ -141,12 +171,12 @@ const NewClaim = (props) => {
 
             <div className="row">
               <div className="col"><label>Type of Animal:</label></div>
-              <div className="col"><input onChange={handleChange} type="text" id="animaltype" /><br/></div>
+              <div className="col"><input onChange={handleChange} type="text" id="animalType" /><br/></div>
             </div><br/>
 
             <div className="row">
               <div className="col"><label>Breed:</label></div>
-              <div className="col"><input onChange={handleChange} type="text" id="breedtype" /><br/></div>
+              <div className="col"><input onChange={handleChange} type="text" id="breedType" /><br/></div>
             </div><br/>
             </>}
 
@@ -159,17 +189,17 @@ const NewClaim = (props) => {
             
                         <div className="row">
               <div className="col"><label>Estimated Claim Amount:</label></div>
-              <div className="col"><input onChange={handleChange} type="number" id="claimamount"/><br/></div>
+              <div className="col"><input onChange={handleChange} type="number" id="claimAmount"/><br/></div>
             </div><br/>
 
             <div className="row">
               <div className="col"><label>Reason for Claim:</label></div>
-              <div className="col"><textarea onChange={handleChange} id="reasonforclaim"/><br/></div>
+              <div className="col"><textarea onChange={handleChange} id="reasonForClaim"/><br/></div>
             </div><br/>
 
             <div className="row">
               <div className="col"><label>Other Info:</label></div>
-              <div className="col"><textarea onChange={handleChange} id="otherinfo"/><br/></div>
+              <div className="col"><textarea onChange={handleChange} id="otherInfo"/><br/></div>
             </div><br/> 
             </>}
 

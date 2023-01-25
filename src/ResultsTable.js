@@ -1,21 +1,45 @@
 
-import { useState } from "react";
-import getAllClaims from "./ClaimsData";
+import { useEffect, useState } from "react";
+import {getAllActionsAxios, getAllClaims, getAllClaimsAxios} from "./ClaimsData";
 import PolicyDetails from "./PolicyDetails";
 import TableRow from "./TableRow";
 
 const ResultsTable = (props) => {
 
+    console.log(props.allClaims);
+
     
 
     const allClaims = props.allClaims;
-    let searchResults = allClaims.filter((claim,index) => claim.policynumber == props.searchTerm);
+
+    const[actionsList, setActionsList] = useState();
+
+
+
+    const loadActions = () => {
+        getAllActionsAxios()
+        .then(response => {setActionsList(response.data)})
+      }
+    
+     useEffect(() => {
+    
+      loadActions();
+    
+     },[])
+
+     console.log(actionsList);
+
+
+    
+
+    
+    let searchResults = allClaims.filter((claim,index) => claim.policyNumber == props.searchTerm);
 
     const [selectedPolicy, setSelectedPolicy] = useState("");
     const [displaySearch, setDisplaySearch] = useState("true");
 
     if(props.searchType == "name"){
-        searchResults = allClaims.filter((claim,index) => claim.sname.toLowerCase().includes(props.nameSearch.toLowerCase()));
+        searchResults = allClaims.filter((claim,index) => claim.surname.toLowerCase().includes(props.nameSearch.toLowerCase()));
     }
 
 

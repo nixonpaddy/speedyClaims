@@ -3,8 +3,30 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import AddTask from "./AddTask";
 import TaskTable from "./TaskTable";
+import { getClaimById } from "./ClaimsData";
 
 export const EditPolicy = (props) => {
+
+
+
+
+
+  const { policyNumber } = useParams();
+
+  const[claimTobeEdited, setClaimToBeEdited] = useState();
+
+
+
+  const loadClaim = () => {
+    getClaimById(policyNumber)
+    .then(response => {setClaimToBeEdited(response.data)});
+    
+  }
+
+  loadClaim();
+  console.log(claimTobeEdited);
+
+
   const formReducer = (state, data) => {
     return { ...state, [data.field]: data.value };
   };
@@ -15,39 +37,56 @@ export const EditPolicy = (props) => {
     //console.log(newClaim);
   };
 
-  const navigate = useNavigate();
-  const { policyNumber } = useParams();
-  const claimTobeEdited = props.claimsList.filter(
-    (claim, index) => claim.policynumber == policyNumber
-  );
-  const [claimType, setClaimType] = useState(claimTobeEdited[0].claimtype);
+  
+
+
+    const navigate = useNavigate();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // const claimTobeEdited = props.claimsList.filter(
+  //   (claim, index) => claim.policyNumber == policyNumber
+  // );
+  const [claimType, setClaimType] = useState(claimTobeEdited.claimType);
   const [claimHandlerNote, setClaimHandlerNote] = useState("");
   const [claimDiary, setClaimDiary] = useState(
     props.claimsList.filter(
-      (claim, index) => claim.policynumber == claimTobeEdited[0].policynumber
-    )[0].actionslog
+      (claim, index) => claim.policyNumber == claimTobeEdited[0].policyNumber
+    )[0].actions
   );
   const [tasks, setTasks] = useState(claimTobeEdited[0].tasks);
   
   const [newTask, setNewTask] = useState("");
 
   const initialClaimState = {
-    policynumber: claimTobeEdited[0].policynumber,
-    fname: claimTobeEdited[0].fname,
-    sname: claimTobeEdited[0].sname,
-    claimstatus: claimTobeEdited[0].claimstatus,
-    otherinfo: claimTobeEdited[0].otherinfo,
-    animaltype: claimTobeEdited[0].animaltype,
-    approvedpayoutamount: claimTobeEdited[0].approvedpayoutamount,
-    breedtype: claimTobeEdited[0].breedtype,
-    claimamount: claimTobeEdited[0].claimamount,
-    claimdate: claimTobeEdited[0].claimdate,
-    claimtype: claimTobeEdited[0].claimtype,
-    propertyaddress: claimTobeEdited[0].propertyaddress,
-    reasonforclaim: claimTobeEdited[0].reasonforclaim,
-    vehiclemake: claimTobeEdited[0].vehiclemake,
-    vehiclemodel: claimTobeEdited[0].vehiclemodel,
-    vehicleyear: claimTobeEdited[0].vehicleyear,
+    policynumber: claimTobeEdited[0].policyNumber,
+    fname: claimTobeEdited[0].firstName,
+    sname: claimTobeEdited[0].surName,
+    claimstatus: claimTobeEdited[0].claimStatus,
+    otherinfo: claimTobeEdited[0].otherInfo,
+    animaltype: claimTobeEdited[0].animalType,
+    approvedpayoutamount: claimTobeEdited[0].approvedPayoutAmount,
+    breedtype: claimTobeEdited[0].breedType,
+    claimamount: claimTobeEdited[0].claimAmount,
+    claimdate: claimTobeEdited[0].claimDate,
+    claimtype: claimTobeEdited[0].claimType,
+    propertyaddress: claimTobeEdited[0].propertyAddress,
+    reasonforclaim: claimTobeEdited[0].reasonForClaim,
+    vehiclemake: claimTobeEdited[0].vehicleMake,
+    vehiclemodel: claimTobeEdited[0].vehicleModel,
+    vehicleyear: claimTobeEdited[0].vehicleYear,
     actionslog: claimDiary,
     tasks: tasks,
   };

@@ -12,7 +12,7 @@ const PolicyDetails = (props) => {
 
   const clickEdit = (event) => {
     event.preventDefault();
-    navigate(`/editpolicy/${props.policy.policynumber}`);
+    navigate(`/editpolicy/${props.policy.policyNumber}`);
   };
 
   const canBeEdited = () => {
@@ -31,7 +31,7 @@ const PolicyDetails = (props) => {
   };
 
   const tasks = props.policy.tasks;
-  console.log(tasks);
+  console.log("Tasks are .. " + tasks);
 
   return (
     <div>
@@ -45,7 +45,7 @@ const PolicyDetails = (props) => {
               <label className="bolden">Policy Number:</label>
             </div>
             <div className="col">
-              <span> {props.policy.policynumber} </span>
+              <span> {props.policy.policyNumber} </span>
               <br />
             </div>
           </div>
@@ -57,7 +57,7 @@ const PolicyDetails = (props) => {
             </div>
             <div className="col">
               <span>
-                {props.policy.fname} {props.policy.sname}
+                {props.policy.fname} {props.policy.surname}
               </span>
               <br />
             </div>
@@ -69,7 +69,7 @@ const PolicyDetails = (props) => {
               <label className="bolden">Claim Type:</label>
             </div>
             <div className="col">
-              <span>{props.policy.claimtype}</span>
+              <span>{props.policy.claimType}</span>
               <br />
             </div>
           </div>
@@ -80,7 +80,7 @@ const PolicyDetails = (props) => {
               <label className="bolden">Date of Claim:</label>
             </div>
             <div className="col">
-              <span>{props.policy.claimdate}</span>
+              <span>{props.policy.claimDate}</span>
               <br />
             </div>
           </div>
@@ -91,7 +91,7 @@ const PolicyDetails = (props) => {
               <label className="bolden">Reason for Claim:</label>
             </div>
             <div className="col">
-              <span>{props.policy.reasonforclaim}</span>
+              <span>{props.policy.reasonForClaim}</span>
               <br />
             </div>
           </div>
@@ -105,8 +105,8 @@ const PolicyDetails = (props) => {
                 </div>
                 <div className="col">
                   <span>
-                    {props.policy.vehicleyear} {props.policy.vehiclemake}{" "}
-                    {props.policy.vehiclemodel}
+                    {props.policy.vehicleYear} {props.policy.vehicleMake}{" "}
+                    {props.policy.vehicleModel}
                   </span>
                   <br />
                 </div>
@@ -122,7 +122,7 @@ const PolicyDetails = (props) => {
                   <label className="bolden">Address of Property:</label>
                 </div>
                 <div className="col">
-                  <span>{props.policy.propertyaddress}</span>
+                  <span>{props.policy.propertyAddress}</span>
                   <br />
                 </div>
               </div>
@@ -137,7 +137,7 @@ const PolicyDetails = (props) => {
                   <label className="bolden">Animal Type:</label>
                 </div>
                 <div className="col">
-                  <span>{props.policy.animaltype}</span>
+                  <span>{props.policy.animalType}</span>
                   <br />
                 </div>
               </div>
@@ -148,7 +148,7 @@ const PolicyDetails = (props) => {
                   <label className="bolden">Animal Breed:</label>
                 </div>
                 <div className="col">
-                  <span>{props.policy.breedtype}</span>
+                  <span>{props.policy.breedType}</span>
                   <br />
                 </div>
               </div>
@@ -161,7 +161,7 @@ const PolicyDetails = (props) => {
               <label className="bolden">Claim Amount:</label>
             </div>
             <div className="col">
-              <span>£ {props.policy.claimamount}</span>
+              <span>£ {props.policy.claimAmount}</span>
               <br />
             </div>
           </div>
@@ -172,7 +172,7 @@ const PolicyDetails = (props) => {
               <label className="bolden">Additional Notes:</label>
             </div>
             <div className="col">
-              <span>{props.policy.otherinfo}</span>
+              <span>{props.policy.otherInfo}</span>
               <br />
             </div>
           </div>
@@ -183,7 +183,7 @@ const PolicyDetails = (props) => {
               <label className="bolden">Claim Status:</label>
             </div>
             <div className="col">
-              <span>{props.policy.claimstatus}</span>
+              <span>{props.policy.claimStatus}</span>
               <br />
             </div>
           </div>
@@ -196,8 +196,8 @@ const PolicyDetails = (props) => {
             <div className="col">
               <span>
                 {" "}
-                {props.policy.approvedpayoutamount !== "Pending" && `£`}{" "}
-                {props.policy.approvedpayoutamount}
+                {props.policy.approvedPayoutAmount !== "Pending" && `£`}{" "}
+                {props.policy.approvedPayoutAmount}
               </span>
               <br />
             </div>
@@ -208,7 +208,7 @@ const PolicyDetails = (props) => {
             <div className="col">
               <label className="bolden">Follow-up Tasks:</label>
             </div>
-            <TaskTable editable={true} tasks={tasks} setTaskToUpdate={setTaskToUpdate} />
+            {/* <TaskTable editable={true} tasks={tasks} setTaskToUpdate={setTaskToUpdate} /> */}
             {/* <div className="col"><span> {props.policy.task}</span><br/></div> */}
           </div>
 
@@ -246,12 +246,15 @@ const PolicyDetails = (props) => {
           <h2 className="center">Log</h2>
           <div className="container" id="form-details">
             <ul>
-              {props.policy.actionslog.map((claim, index) => (
-                <div key={index}>
-                  <li>
-                    <strong>{claim.slice(0, 10)}</strong>
-                    {claim.slice(10)}
+              {props.policy.actions.map((claim, index) => (
+                <div key={index}>                  
+
+                      <li>
+                    <strong>{claim.actionTaken.slice(0, 10)}</strong>
+                    {claim.actionTaken.slice(10)}
                   </li>
+                  
+
                 </div>
               ))}
             </ul>

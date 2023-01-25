@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 
@@ -76,12 +77,52 @@ const allClaims=[
 }
 
 
-export const addNewClaim = (newClaim) => {
-    const newList = [...allClaims,newClaim];
-    console.log(newList); 
+// export const addNewClaim = (newClaim) => {
+//     const newList = [...allClaims,newClaim];
+//     console.log(newList); 
 
+// }
+
+
+export const addNewClaim = (claim) => {
+    return axios({url : "http://localhost:8080/api/claim",
+                    method: "POST",
+                    headers: {"Accept" : "application/json", "Content-Type": "application/json"},
+                    data : claim
+                })
+            }
+
+
+
+export const getClaimById = (claimId) => {
+  return axios({url : "http://localhost:8080/api/claim/" + claimId,
+  method:"GET",
+  headers:{"Accept" : "application/json"}
+  })
 }
 
 
 
-  export default getAllClaims;
+
+
+export const getAllClaimsAxios = () => {
+  return axios({url : "http://localhost:8080/api/claim",
+                method:"GET",
+                headers:{"Accept" : "application/json"}
+                })
+                
+
+
+}
+
+
+export const getAllActionsAxios = () => {
+    return axios({url : "http://localhost:8080/api/actions",
+                 method:"GET",
+                 headers:{"Accept" : "application/json"}
+                })
+          }
+
+
+
+ // export default getAllClaims;

@@ -1,25 +1,31 @@
 import logo from './logo.svg';
+import { Provider } from 'react-redux';
 import './App.css';
 import Navigation from './Navigation';
 import "./claims.css";
 import NewClaim from "./NewClaim"
-import {Routes, Route} from "react-router-dom";
+import {Routes, Route, BrowserRouter} from "react-router-dom";
 import SearchClaim from "./SearchClaim"
 import OpenClaims from './OpenClaims';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BottomBorder from "./BottomBorder";
 import PolicyDetails from './PolicyDetails';
-import getAllClaims from './ClaimsData';
+import {getAllClaims, getAllClaimsAxios } from './ClaimsData';
 import EditPolicy from './EditPolicy';
 import ArchivedClaims from './ArchivedClaims';
+import store from './store';
+import { UserContext } from './UserContext';
+import Login from './Login';
 
 function App() {
 
   const[searchType,setSearchType] = useState("policy");
   const [NameSearchTerm, setNameSearchTerm] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const[newClaimsList, setNewClaimsList] = useState(getAllClaims);
+  const[newClaimsList, setNewClaimsList] = useState();
   const [currentPolicyNumber, setCurrentPolicyNumber] =useState(50);
+  
+  const [currentUser, setCurrentUser] = useState({ name : "", role : ""});
 
   console.log(newClaimsList);
 
@@ -28,17 +34,50 @@ function App() {
     setNameSearchTerm("");
   }
 
+
+  //////////////
+
+  const loadData = () => {
+    getAllClaimsAxios()
+    .then(response => {setNewClaimsList(response.data)});
+   
+    
+    
+  }
+
+ useEffect(() => {
+
+  loadData();
+
+ },[])
+
+
+
+
+
+
+
+
+
+
+
+  //////////
+
   
  
  
 
   return (
-    <>
-  
+    <BrowserRouter>
+    
+
+<Provider store={store} >
+<UserContext.Provider value={{user:currentUser, setUser:setCurrentUser }}>
 
     <Routes>
       <Route element = {<Navigation />}>
-        <Route path="/NewClaim" element={<NewClaim setNewClaimsList={setNewClaimsList} newClaimsList={newClaimsList} currentPolicyNumber={currentPolicyNumber} setCurrentPolicyNumber={setCurrentPolicyNumber}/>}/>
+      <Route path="/login" element = {<Login />} />
+        <Route path="/NewClaim" element={<NewClaim setNewClaimsList={setNewClaimsList} newClaimsList={newClaimsList} currentPolicyNumber={currentPolicyNumber} setCurrentPolicyNumber={setCurrentPolicyNumber} loadData={loadData}/>}/>
         <Route path="/Search" element={<SearchClaim searchType={searchType} setSearchType={setSearchType} setSearchTerm={setSearchTerm} searchTerm={searchTerm} nameSearchTerm={NameSearchTerm} setNameSearchTerm={setNameSearchTerm} allClaims={newClaimsList}/>}/>
         <Route path="/OpenClaims" element={<OpenClaims allClaims={newClaimsList} />}/>
         <Route path="/Search/:policyNumber"  element={<SearchClaim searchType={searchType} setSearchType={setSearchType} setSearchTerm={setSearchTerm} searchTerm={searchTerm} allClaims={newClaimsList} nameSearchTerm={NameSearchTerm} setNameSearchTerm={setNameSearchTerm}/>}/>
@@ -50,7 +89,10 @@ function App() {
       </Route>     
     </Routes>
     <BottomBorder />
-    </>
+    </UserContext.Provider> 
+    </Provider>
+    
+    </BrowserRouter>
 
 
 

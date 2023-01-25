@@ -6,6 +6,8 @@ import ResultsTable from "./ResultsTable";
 
 const SearchClaim = (props) =>{
 
+  console.log(props.allClaims);
+
 const [displayTable, setDisplayTable] = useState(false);
 const [searchBoxes, setSearchBoxes] = useState(false);
 const [policySearchTerm, setPolicySearchTerm] = useState("");
@@ -91,10 +93,11 @@ const oneTermEntered = () => {
             </div><br/>
       
                   
-            <br/>
-            <div className="submit-button"><button disabled={!oneTerm}>Search</button></div>
+            
             <br/></>}
-            <div className="submit-button"><button onClick={clearSearch}>Clear Search</button></div>
+            <div className="submit-button"><button disabled={!oneTerm}>Search</button></div>
+            <br/>
+            <div className="submit-button"><button onClick={clearSearch}>Reset </button></div>
           </form>
         </div>
         <br/>  
