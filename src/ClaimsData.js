@@ -93,6 +93,9 @@ export const addNewClaim = (claim) => {
             }
 
 
+            
+
+
 
 export const getClaimById = (claimId) => {
   return axios({url : "http://localhost:8080/api/claim/" + claimId,
@@ -122,6 +125,25 @@ export const getAllActionsAxios = () => {
                  headers:{"Accept" : "application/json"}
                 })
           }
+
+
+
+          export const updateClaim = (claim) => {
+            console.log(claim);
+            return axios({url : "http://localhost:8080/api/claim/" + claim.policyNumber,
+                            method: "PUT",
+                            headers: {"Accept" : "application/json", "Content-Type": "application/json"},
+                            data : claim
+                        })
+                    }
+
+
+                    export const searchName = (name) => {
+                        return axios({url : "http://localhost:8080/api/claim/" +name,
+                                     method:"GET",
+                                     headers:{"Accept" : "application/json"}
+                                    })
+                              }
 
 
 

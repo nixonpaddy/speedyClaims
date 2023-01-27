@@ -3,148 +3,44 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import AddTask from "./AddTask";
 import TaskTable from "./TaskTable";
-import { getClaimById, updateClaim } from "./ClaimsData";
+import { getClaimById } from "./ClaimsData";
 
 export const EditPolicy = (props) => {
 
-  const allClaims = props.claimsList;
-
-  
 
 
 
-  
-const { policyNumber } = useParams();
-const[loadingData, setLoadingData] = useState(false);
-const[claimTobeEdited, setClaimToBeEdited] = useState(props.policyEdit);
-const [claimType, setClaimType] = useState();
-const [addNewTask, setAddNewTask] = useState(false);
-const [claimHandlerNote, setClaimHandlerNote] = useState("");
-const [tasks, setTasks] = useState();  
-const [newTask, setNewTask] = useState("");
 
-//const myClaim = allClaims.filter(claim => claim.policyNumber == policyNumber);
-//setClaimToBeEdited(props.policyEdit[policyNumber-1]);
+  const { policyNumber } = useParams();
 
-const navigate = useNavigate();
-
-  // const[claimTobeEdited, setClaimToBeEdited] = useState({
-  //   policyNumber: 0,
-  //   firstName: "John",
-  //   sname: "",
-  
-  // });
-
- 
+  const[claimTobeEdited, setClaimToBeEdited] = useState();
 
 
 
-  // const loadClaim = () => {
+  const loadClaim = () => {
+    getClaimById(policyNumber)
+    .then(response => {setClaimToBeEdited(response.data)});
+    
+  }
 
-   
-  //    getClaimById(policyNumber)
-  //   .then(response => {setClaimToBeEdited(response.data)})
-  //   .then(setLoadingData(false));
-  // }
-
-
-//   async function loadClaim(){
-   
-//     const response = await getClaimById(policyNumber);
-
-//     setClaimToBeEdited(response.data);
-//     setLoadingData(false);
-//     console.log(claimTobeEdited);
-//  }
-
-//   useEffect(() => {
-
-//     loadClaim();    
-  
-//    },[])
-
-
+  loadClaim();
+  console.log(claimTobeEdited);
 
 
   const formReducer = (state, data) => {
     return { ...state, [data.field]: data.value };
   };
- 
-
-
-  // const initialClaimState = {
-  //   policyNumber: 0,
-  //   firstName: "",
-  //   surname: "",
-  //   claimstatus: claimTobeEdited[0].claimStatus,
-  //   otherinfo: claimTobeEdited[0].otherInfo,
-  //   animaltype: claimTobeEdited[0].animalType,
-  //   approvedpayoutamount: claimTobeEdited[0].approvedPayoutAmount,
-  //   breedtype: claimTobeEdited[0].breedType,
-  //   claimamount: claimTobeEdited[0].claimAmount,
-  //   claimdate: claimTobeEdited[0].claimDate,
-  //   claimtype: claimTobeEdited.claimType,
-  //   propertyaddress: claimTobeEdited[0].propertyAddress,
-  //   reasonforclaim: claimTobeEdited[0].reasonForClaim,
-  //   vehiclemake: claimTobeEdited[0].vehicleMake,
-  //   vehiclemodel: claimTobeEdited[0].vehicleModel,
-  //   vehicleyear: claimTobeEdited[0].vehicleYear,
-  //   actionslog: claimDiary,
-  //   tasks: tasks,
-  // };
-
-  let initialClaimState = {
-    policyNumber:claimTobeEdited.policyNumber,
-    // firstName: claimTobeEdited.firstName,
-    // surname: claimTobeEdited.surname,
-    // claimStatus: claimTobeEdited.claimStatus,
-    // otherInfo: claimTobeEdited.otherInfo,
-    // animalType: claimTobeEdited.animalType,
-    // approvedpayoutamount: claimTobeEdited.approvedPayoutAmount,
-    // breedtype: claimTobeEdited.breedType,
-    // claimamount: claimTobeEdited.claimAmount,
-    // claimdate: claimTobeEdited.claimDate,
-    // claimtype: claimTobeEdited.claimType,
-    // propertyaddress: claimTobeEdited.propertyAddress,
-    // reasonforclaim: claimTobeEdited.reasonForClaim,
-    // vehiclemake: claimTobeEdited.vehicleMake,
-    // vehiclemodel: claimTobeEdited.vehicleModel,
-    // vehicleyear: claimTobeEdited.vehicleYear,
-  //   actionslog: claimDiary,
-  //   tasks: tasks,
-  };
-
-  
-
- const [newClaim, dispatch] = useReducer(formReducer, initialClaimState);
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
 
  
   const handleChange = (event) => {
     dispatch({ field: event.target.id, value: event.target.value });
+    //console.log(newClaim);
   };
 
   
 
+
+    const navigate = useNavigate();
 
 
 
@@ -164,53 +60,55 @@ const navigate = useNavigate();
   //   (claim, index) => claim.policyNumber == policyNumber
   // );
 
-
   
+  const [claimType, setClaimType] = useState(claimTobeEdited.claimType);
+  const [claimHandlerNote, setClaimHandlerNote] = useState("");
+  const [claimDiary, setClaimDiary] = useState(
+    props.claimsList.filter(
+      (claim, index) => claim.policyNumber == claimTobeEdited[0].policyNumber
+    )[0].actions
+  );
+  const [tasks, setTasks] = useState(claimTobeEdited[0].tasks);
+  
+  const [newTask, setNewTask] = useState("");
 
-  // const [claimDiary, setClaimDiary] = useState(
-  //   props.claimsList.filter(
-  //     (claim, index) => claim.policyNumber == claimTobeEdited[0].policyNumber
-  //   )[0].actions
-  // );
+  const initialClaimState = {
+    policynumber: claimTobeEdited[0].policyNumber,
+    fname: claimTobeEdited[0].firstName,
+    sname: claimTobeEdited[0].surName,
+    claimstatus: claimTobeEdited[0].claimStatus,
+    otherinfo: claimTobeEdited[0].otherInfo,
+    animaltype: claimTobeEdited[0].animalType,
+    approvedpayoutamount: claimTobeEdited[0].approvedPayoutAmount,
+    breedtype: claimTobeEdited[0].breedType,
+    claimamount: claimTobeEdited[0].claimAmount,
+    claimdate: claimTobeEdited[0].claimDate,
+    claimtype: claimTobeEdited[0].claimType,
+    propertyaddress: claimTobeEdited[0].propertyAddress,
+    reasonforclaim: claimTobeEdited[0].reasonForClaim,
+    vehiclemake: claimTobeEdited[0].vehicleMake,
+    vehiclemodel: claimTobeEdited[0].vehicleModel,
+    vehicleyear: claimTobeEdited[0].vehicleYear,
+    actionslog: claimDiary,
+    tasks: tasks,
+  };
 
-
-  // const initialClaimState = {
-  //   policyNumber: claimTobeEdited.policyNumber,
-  //   firstName: "",
-  //   surname: claimTobeEdited.surname,
-    // claimstatus: claimTobeEdited[0].claimStatus,
-    // otherinfo: claimTobeEdited[0].otherInfo,
-    // animaltype: claimTobeEdited[0].animalType,
-    // approvedpayoutamount: claimTobeEdited[0].approvedPayoutAmount,
-    // breedtype: claimTobeEdited[0].breedType,
-    // claimamount: claimTobeEdited[0].claimAmount,
-    // claimdate: claimTobeEdited[0].claimDate,
-     //claimtype: claimTobeEdited.claimType,
-    // propertyaddress: claimTobeEdited[0].propertyAddress,
-    // reasonforclaim: claimTobeEdited[0].reasonForClaim,
-    // vehiclemake: claimTobeEdited[0].vehicleMake,
-    // vehiclemodel: claimTobeEdited[0].vehicleModel,
-    // vehicleyear: claimTobeEdited[0].vehicleYear,
-    // actionslog: claimDiary,
-    // tasks: tasks,
-  //};
-
-  //const outstandingTasks = claimTobeEdited[0].tasks.filter((task,index) => task.taskstatus == "Outstanding");
+  const outstandingTasks = claimTobeEdited[0].tasks.filter((task,index) => task.taskstatus == "Outstanding");
 
 
   let showApprove = true;
 
-  // if(outstandingTasks.length > 0){
-  //   showApprove=false;
-  // }
+  if(outstandingTasks.length > 0){
+    showApprove=false;
+  }
 
   
-  //console.log(outstandingTasks.length)
+  console.log(outstandingTasks.length)
 
   
  
 
-  
+  const [newClaim, dispatch] = useReducer(formReducer, initialClaimState);
 
   const handleClaimHandlerNoteChange = (event) => {
     setClaimHandlerNote(
@@ -222,7 +120,7 @@ const navigate = useNavigate();
     setNewTask(event.target.value);
   };
 
-  
+  const [addNewTask, setAddNewTask] = useState(false);
 
   const clickNewTask = (event) => {
     event.preventDefault();
@@ -232,18 +130,17 @@ const navigate = useNavigate();
   const saveModifications = (event) => {
     event.preventDefault();
 
-    // const moddedList = props.claimsList.filter(
-    //   (claim, index) => claim.policynumber !== claimTobeEdited[0].policynumber
-    // );
+    const moddedList = props.claimsList.filter(
+      (claim, index) => claim.policynumber !== claimTobeEdited[0].policynumber
+    );
 
-    // setClaimDiary(claimDiary.push(claimHandlerNote));
-    // if (newTask !== "") {
-    //   setTasks(tasks.push({ task: newTask, taskstatus: "Outstanding" }));
-    // }
-    // newClaim.actionslog = claimDiary;
+    setClaimDiary(claimDiary.push(claimHandlerNote));
+    if (newTask !== "") {
+      setTasks(tasks.push({ task: newTask, taskstatus: "Outstanding" }));
+    }
+    newClaim.actionslog = claimDiary;
 
-    //props.setNewClaimsList([...moddedList, newClaim]);
-    updateClaim(newClaim);
+    props.setNewClaimsList([...moddedList, newClaim]);
 
     alert("Claim Details have been modified");
     props.clearSearch();
@@ -256,15 +153,9 @@ const navigate = useNavigate();
   };
 
 
-
   return (
-
-    
-    
     <div>
-      
       <div className="container" id="form-details">
-        {!loadingData && 
         <form onSubmit={saveModifications}>
           <div className="row">
             <div className="col">
@@ -275,8 +166,8 @@ const navigate = useNavigate();
                 <input
                   disabled={true}
                   type="text"
-                  id="policyNumber"
-                  defaultValue={claimTobeEdited.policyNumber}
+                  id="policynumber"
+                  defaultValue={claimTobeEdited[0].policynumber}
                 />
                 <br />
               </div>
@@ -293,9 +184,8 @@ const navigate = useNavigate();
               <input
                 type="text"
                 onChange={handleChange}
-                id="firstName"
-                //value={newClaim.firstName}
-                defaultValue={claimTobeEdited.firstName}
+                id="fname"
+                value={newClaim.fname}
               />
               <br />
             </div>
@@ -310,8 +200,8 @@ const navigate = useNavigate();
               <input
                 type="text"
                 onChange={handleChange}
-                id="surname"
-                defaultValue={claimTobeEdited.surname}
+                id="sname"
+                defaultValue={claimTobeEdited[0].sname}
               />
               <br />
             </div>
@@ -325,8 +215,8 @@ const navigate = useNavigate();
             <div className="col">
               <input
                 type="date"
-                id="claimDate"
-                defaultValue={claimTobeEdited.claimDate}
+                id="claimdate"
+                defaultValue={claimTobeEdited[0].claimdate}
                 onChange={handleChange}
               />
             </div>
@@ -339,9 +229,9 @@ const navigate = useNavigate();
             </div>
             <div className="col">
               <select
-                defaultValue={claimTobeEdited.claimType}
+                defaultValue={claimTobeEdited[0].claimtype}
                 name="claimtype"
-                id="claimType"
+                id="claimtype"
                 onChange={policyTypeChange}
               >
                 <option disabled>Select</option>
@@ -361,8 +251,8 @@ const navigate = useNavigate();
                 </div>
                 <div className="col">
                   <textarea
-                    id="propertyAddress"
-                    defaultValue={claimTobeEdited.propertyAddress}
+                    id="propertyaddress"
+                    defaultValue={claimTobeEdited[0].propertyaddress}
                     onChange={handleChange}
                   />
                 </div>
@@ -380,8 +270,8 @@ const navigate = useNavigate();
                 <div className="col">
                   <input
                     type="text"
-                    id="vehicleMake"
-                    defaultValue={claimTobeEdited.vehicleMake}
+                    id="vehiclemake"
+                    defaultValue={claimTobeEdited[0].vehiclemake}
                     onChange={handleChange}
                   />
                 </div>
@@ -395,8 +285,8 @@ const navigate = useNavigate();
                 <div className="col">
                   <input
                     type="text"
-                    id="vehicleModel"
-                    defaultValue={claimTobeEdited.vehicleModel}
+                    id="vehiclemodel"
+                    defaultValue={claimTobeEdited[0].vehiclemodel}
                     onChange={handleChange}
                   />
                 </div>
@@ -410,8 +300,8 @@ const navigate = useNavigate();
                 <div className="col">
                   <input
                     type="number"
-                    id="vehicleYear"
-                    defaultValue={claimTobeEdited.vehicleYear}
+                    id="vehicleyear"
+                    defaultValue={claimTobeEdited[0].vehicleyear}
                     onChange={handleChange}
                   />
                 </div>
@@ -429,8 +319,8 @@ const navigate = useNavigate();
                 <div className="col">
                   <input
                     type="text"
-                    id="animalType"
-                    defaultValue={claimTobeEdited.animalType}
+                    id="animaltype"
+                    defaultValue={claimTobeEdited[0].animaltype}
                     onChange={handleChange}
                   />
                 </div>
@@ -444,8 +334,8 @@ const navigate = useNavigate();
                 <div className="col">
                   <input
                     type="text"
-                    id="breedType"
-                    defaultValue={claimTobeEdited.breedType}
+                    id="breedtype"
+                    defaultValue={claimTobeEdited[0].breedtype}
                     onChange={handleChange}
                   />
                 </div>
@@ -461,8 +351,8 @@ const navigate = useNavigate();
             <div className="col">
               <input
                 type="number"
-                id="claimAmount"
-                defaultValue={claimTobeEdited.claimAmount}
+                id="claimamount"
+                defaultValue={claimTobeEdited[0].claimamount}
                 onChange={handleChange}
               />
             </div>
@@ -475,8 +365,8 @@ const navigate = useNavigate();
             </div>
             <div className="col">
               <textarea
-                id="reasonForClaim"
-                defaultValue={claimTobeEdited.reasonForClaim}
+                id="reasonforclaim"
+                defaultValue={claimTobeEdited[0].reasonforclaim}
                 onChange={handleChange}
               />
             </div>
@@ -490,8 +380,8 @@ const navigate = useNavigate();
             <div className="col">
               <textarea
                 onChange={handleChange}
-                id="otherInfo"
-                defaultValue={claimTobeEdited.otherInfo}
+                id="otherinfo"
+                defaultValue={claimTobeEdited[0].otherinfo}
               />
             </div>
           </div>
@@ -503,9 +393,9 @@ const navigate = useNavigate();
             </div>
             <div className="col">
               <select
-                defaultValue={claimTobeEdited.claimStatus}
+                defaultValue={claimTobeEdited[0].claimstatus}
                 name="claimstatus"
-                id="claimStatus"
+                id="claimstatus"
                 onChange={handleChange}
               >
                 <option value="Awaiting Assessment">
@@ -530,15 +420,15 @@ const navigate = useNavigate();
             <div className="col">
               <input
                 type="text"
-                id="approvedPayoutAmount"
-                defaultValue={claimTobeEdited.approvedPayoutAmount}
+                id="approvedpayoutamount"
+                defaultValue={claimTobeEdited[0].approvedpayoutamount}
                 onChange={handleChange}
               />
             </div>
           </div>
           <br />
 
-          {/* <TaskTable tasks={tasks} editable={false}setTasks={setTasks} /> */}
+          <TaskTable tasks={tasks} editable={false}setTasks={setTasks} />
 
           <div className="row">
             {addNewTask && (
@@ -549,7 +439,7 @@ const navigate = useNavigate();
                 <div className="col">
                   <input
                     type="text"
-                    id="newTask"
+                    id="newtask"
                     onChange={handleNewTaskChange}
                   />
                 </div>
@@ -587,11 +477,9 @@ const navigate = useNavigate();
 
           <br />
         </form>
-}
       </div>
       <br />
-            
     </div>
   );
-;}
+};
 export default EditPolicy;

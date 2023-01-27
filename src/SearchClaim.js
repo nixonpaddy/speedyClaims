@@ -41,6 +41,7 @@ const carryOutSearch = (event) => {
 
   setDisplayTable(true);
   setSearchBoxes(true);
+  //props.setEdit();
 }
 
 
@@ -102,7 +103,7 @@ const oneTermEntered = () => {
         </div>
         <br/>  
 
-        {displayTable && <ResultsTable setPolicyToEdit={props.setPolicyToEdit} nameSearch={nameSearch} searchTerm={props.searchTerm} allClaims={allClaims} searchType={props.searchType}/>}
+        {displayTable && <ResultsTable setPolicyToEdit={props.setPolicyToEdit} nameSearch={nameSearch} searchTerm={props.searchTerm} allClaims={allClaims} searchType={props.searchType} thePolicy={props.policyEdit}/>}
 
         </>
 

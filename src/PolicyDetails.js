@@ -57,7 +57,7 @@ const PolicyDetails = (props) => {
             </div>
             <div className="col">
               <span>
-                {props.policy.fname} {props.policy.surname}
+                {props.policy.firstName} {props.policy.surname}
               </span>
               <br />
             </div>
@@ -97,7 +97,7 @@ const PolicyDetails = (props) => {
           </div>
           <br />
 
-          {props.policy.claimtype === "Motor" && (
+          {props.policy.claimType === "Motor" && (
             <>
               <div className="row">
                 <div className="col">
@@ -115,7 +115,7 @@ const PolicyDetails = (props) => {
             </>
           )}
 
-          {props.policy.claimtype === "Property" && (
+          {props.policy.claimType === "Property" && (
             <>
               <div className="row">
                 <div className="col">
@@ -130,7 +130,7 @@ const PolicyDetails = (props) => {
             </>
           )}
 
-          {props.policy.claimtype === "Pet" && (
+          {props.policy.claimType === "Pet" && (
             <>
               <div className="row">
                 <div className="col">
