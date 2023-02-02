@@ -139,11 +139,25 @@ export const getAllActionsAxios = () => {
 
 
                     export const searchName = (name) => {
-                        return axios({url : "http://localhost:8080/api/claim/" +name,
+                        return axios({url : "http://localhost:8080/api/claim/name/" + name,
                                      method:"GET",
                                      headers:{"Accept" : "application/json"}
                                     })
                               }
+
+                              export const openClaims = () => {
+                                return axios({url : "http://localhost:8080/api/claim/open",
+                                             method:"GET",
+                                             headers:{"Accept" : "application/json"}
+                                            })
+                                      }
+
+                                      export const archivedClaims = () => {
+                                        return axios({url : "http://localhost:8080/api/claim/archived",
+                                                     method:"GET",
+                                                     headers:{"Accept" : "application/json"}
+                                                    })
+                                              }
 
 
 

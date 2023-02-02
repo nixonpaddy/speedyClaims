@@ -7,7 +7,7 @@ import { getClaimById, updateClaim } from "./ClaimsData";
 
 export const EditPolicy = (props) => {
 
-  const allClaims = props.claimsList;
+
 
   
 
@@ -17,51 +17,17 @@ export const EditPolicy = (props) => {
 const { policyNumber } = useParams();
 const[loadingData, setLoadingData] = useState(false);
 const[claimTobeEdited, setClaimToBeEdited] = useState(props.policyEdit);
-const [claimType, setClaimType] = useState();
+const [claimType, setClaimType] = useState(props.policyEdit.claimType);
 const [addNewTask, setAddNewTask] = useState(false);
 const [claimHandlerNote, setClaimHandlerNote] = useState("");
 const [tasks, setTasks] = useState();  
 const [newTask, setNewTask] = useState("");
 
-//const myClaim = allClaims.filter(claim => claim.policyNumber == policyNumber);
-//setClaimToBeEdited(props.policyEdit[policyNumber-1]);
+
 
 const navigate = useNavigate();
 
-  // const[claimTobeEdited, setClaimToBeEdited] = useState({
-  //   policyNumber: 0,
-  //   firstName: "John",
-  //   sname: "",
-  
-  // });
 
- 
-
-
-
-  // const loadClaim = () => {
-
-   
-  //    getClaimById(policyNumber)
-  //   .then(response => {setClaimToBeEdited(response.data)})
-  //   .then(setLoadingData(false));
-  // }
-
-
-//   async function loadClaim(){
-   
-//     const response = await getClaimById(policyNumber);
-
-//     setClaimToBeEdited(response.data);
-//     setLoadingData(false);
-//     console.log(claimTobeEdited);
-//  }
-
-//   useEffect(() => {
-
-//     loadClaim();    
-  
-//    },[])
 
 
 
@@ -150,62 +116,9 @@ const navigate = useNavigate();
 
 
 
-
-
-
-
-
-
-
-
-
-
-  // const claimTobeEdited = props.claimsList.filter(
-  //   (claim, index) => claim.policyNumber == policyNumber
-  // );
-
-
-  
-
-  // const [claimDiary, setClaimDiary] = useState(
-  //   props.claimsList.filter(
-  //     (claim, index) => claim.policyNumber == claimTobeEdited[0].policyNumber
-  //   )[0].actions
-  // );
-
-
-  // const initialClaimState = {
-  //   policyNumber: claimTobeEdited.policyNumber,
-  //   firstName: "",
-  //   surname: claimTobeEdited.surname,
-    // claimstatus: claimTobeEdited[0].claimStatus,
-    // otherinfo: claimTobeEdited[0].otherInfo,
-    // animaltype: claimTobeEdited[0].animalType,
-    // approvedpayoutamount: claimTobeEdited[0].approvedPayoutAmount,
-    // breedtype: claimTobeEdited[0].breedType,
-    // claimamount: claimTobeEdited[0].claimAmount,
-    // claimdate: claimTobeEdited[0].claimDate,
-     //claimtype: claimTobeEdited.claimType,
-    // propertyaddress: claimTobeEdited[0].propertyAddress,
-    // reasonforclaim: claimTobeEdited[0].reasonForClaim,
-    // vehiclemake: claimTobeEdited[0].vehicleMake,
-    // vehiclemodel: claimTobeEdited[0].vehicleModel,
-    // vehicleyear: claimTobeEdited[0].vehicleYear,
-    // actionslog: claimDiary,
-    // tasks: tasks,
-  //};
-
-  //const outstandingTasks = claimTobeEdited[0].tasks.filter((task,index) => task.taskstatus == "Outstanding");
-
-
   let showApprove = true;
 
-  // if(outstandingTasks.length > 0){
-  //   showApprove=false;
-  // }
 
-  
-  //console.log(outstandingTasks.length)
 
   
  
@@ -232,17 +145,6 @@ const navigate = useNavigate();
   const saveModifications = (event) => {
     event.preventDefault();
 
-    // const moddedList = props.claimsList.filter(
-    //   (claim, index) => claim.policynumber !== claimTobeEdited[0].policynumber
-    // );
-
-    // setClaimDiary(claimDiary.push(claimHandlerNote));
-    // if (newTask !== "") {
-    //   setTasks(tasks.push({ task: newTask, taskstatus: "Outstanding" }));
-    // }
-    // newClaim.actionslog = claimDiary;
-
-    //props.setNewClaimsList([...moddedList, newClaim]);
     updateClaim(newClaim);
 
     alert("Claim Details have been modified");

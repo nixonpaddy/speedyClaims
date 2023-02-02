@@ -24,30 +24,26 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const[newClaimsList, setNewClaimsList] = useState();
   const [currentPolicyNumber, setCurrentPolicyNumber] =useState();
-  const[policyEdit, setPolicyEdit] = useState();
+  const[policyEdit, setPolicyEdit] = useState("");
   
   const [currentUser, setCurrentUser] = useState({ name : "", role : ""});
 
-  console.log(newClaimsList);
+  console.log(policyEdit);
 
   const clearSearch = () => {
     setSearchTerm(""); 
     setNameSearchTerm("");
   }
 
+ 
 
-  //////////////
 
   const loadData = () => {
     getAllClaimsAxios()
-    .then(response => {setNewClaimsList(response.data)});  
-    
-    
+    .then(response => {setNewClaimsList(response.data)});      
   }
 
-  // if(searchTerm != ""){
-  //   setPolicyEdit(searchTerm);
-  // }
+
 
  useEffect(() => {
 
@@ -57,50 +53,20 @@ function App() {
 
  console.log(searchTerm)
 
-//  useEffect(() => {
 
-//   if(searchTerm != ""){
-
-//     const claim = getClaimById(searchTerm)
-//     setPolicyEdit(claim);
-//     console.log(claim);
-//   } 
-
-//  },[searchTerm])
-
-
-//  const setEdit = () => {
-//   getClaimById(searchTerm)
-//   .then(response =>(setPolicyEdit(response.data)));
-//  }
 
   useEffect(() => {
+        
 
     getClaimById(searchTerm)
     .then(response =>(setPolicyEdit(response.data)));
   
    },[searchTerm])
  
-  //setPolicyEdit(claim);
-  console.log(policyEdit);
+  
 
 
    
-
-
-
-
-
-
-
-
-
-
-
-
-  //////////
-
-  
  
  
 
@@ -115,9 +81,9 @@ function App() {
       <Route element = {<Navigation />}>
       <Route path="/login" element = {<Login />} />
         <Route path="/NewClaim" element={<NewClaim setNewClaimsList={setNewClaimsList} newClaimsList={newClaimsList} currentPolicyNumber={currentPolicyNumber} setCurrentPolicyNumber={setCurrentPolicyNumber} loadData={loadData}/>}/>
-        <Route path="/Search" element={<SearchClaim  searchType={searchType} setSearchType={setSearchType} setSearchTerm={setSearchTerm} searchTerm={searchTerm} nameSearchTerm={NameSearchTerm} setNameSearchTerm={setNameSearchTerm} allClaims={newClaimsList}/>}/>
-        <Route path="/OpenClaims" element={<OpenClaims allClaims={newClaimsList} />}/>
-        <Route path="/Search/:policyNumber"  element={<SearchClaim searchType={searchType} setSearchType={setSearchType} setSearchTerm={setSearchTerm} searchTerm={searchTerm} allClaims={newClaimsList} nameSearchTerm={NameSearchTerm} setNameSearchTerm={setNameSearchTerm}/>}/>
+        <Route path="/Search" element={<SearchClaim  searchType={searchType} setSearchType={setSearchType} setSearchTerm={setSearchTerm} searchTerm={searchTerm} nameSearchTerm={NameSearchTerm} setNameSearchTerm={setNameSearchTerm} allClaims={newClaimsList} policyEdit={policyEdit} setPolicyEdit={setPolicyEdit}/>}/>
+        <Route path="/OpenClaims" element={<OpenClaims setPolicyEdit={setPolicyEdit} allClaims={newClaimsList} />}/>
+        <Route path="/Search/:policyNumber"  element={<SearchClaim setPolicyEdit={setPolicyEdit} policyEdit={policyEdit} searchType={searchType} setSearchType={setSearchType} setSearchTerm={setSearchTerm} searchTerm={searchTerm} allClaims={newClaimsList} nameSearchTerm={NameSearchTerm} setNameSearchTerm={setNameSearchTerm}/>}/>
         <Route path="/" element = { <h1 className="center">Welcome to the Claims system. Please select an option above.</h1>}/>
         <Route path="/PolicyDetails/:policyNumber"  element={<PolicyDetails  />}/>
         <Route path="*"  element={<h1 className="center">This page does not exist</h1>}/>

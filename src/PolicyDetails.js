@@ -8,6 +8,8 @@ const PolicyDetails = (props) => {
   const [taskToUpdate, setTaskToUpdate] = useState("");
   const [displayLog, setDisplayLog] = useState(false);
 
+  console.log(props.policy.claimType);
+
   const navigate = useNavigate();
 
   const clickEdit = (event) => {
@@ -17,8 +19,8 @@ const PolicyDetails = (props) => {
 
   const canBeEdited = () => {
     if (
-      props.policy.claimstatus == "Rejected" ||
-      props.policy.claimstatus == "Accepted - Paid"
+      props.policy.claimStatus == "Rejected" ||
+      props.policy.claimStatus == "Accepted - Paid"
     ) {
       return false;
     }

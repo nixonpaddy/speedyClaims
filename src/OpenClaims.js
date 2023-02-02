@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./claims.css"
+import { openClaims } from "./ClaimsData";
 import PolicyDetails from "./PolicyDetails";
 
 
@@ -10,23 +11,67 @@ const OpenClaims = (props) => {
 
 
     const [backToClaims, setBackToClaims] = useState(false);
-    const [policyToDisplay, setPolicyToDisplay] = useState({policynumber: 0, name: "", status: ""});
+    const [policyToDisplay, setPolicyToDisplay] = useState("");
     const [showDisplay, setShowDisplay] = useState(false);
+    const [allOpenClaims, setAllOpenClaims] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
 
-    const allClaims = props.allClaims;
-    const openClaims = allClaims.filter((claim,index) =>claim.claimstatus == "Awaiting Assessment");
+    // const allClaims = props.allClaims;
+    // const openClaims = allClaims.filter((claim,index) =>claim.claimstatus == "Awaiting Assessment");
+
+    //const openClaims = openClaims();
+
+    const loadData = () => {
+        openClaims()
+        .then(response => {setAllOpenClaims(response.data)});  
+        setIsLoading(false);   
+      }
+
+
+
+      useEffect(() => {
+
+loadData();
+    
+     },[]);
+
+     
+
+
+
+     useEffect(() => {
+
+        props.setPolicyEdit(policyToDisplay[0])
+            
+             },[policyToDisplay]);
+
+    
+
+
+
+
+      
+
+      
    
 
    const showClaim = (event) => {
-    setPolicyToDisplay(openClaims.filter((claim,index) => claim.policynumber == event.target.value));
+    if(!isLoading){
+
+    setPolicyToDisplay(allOpenClaims.filter((claim,index) => claim.policyNumber == event.target.value));
     setShowDisplay(true);  
     setBackToClaims(true);
+    
+    }
+
    }
 
    const hideClaim = (event) => {
-    setPolicyToDisplay(openClaims.filter((claim,index) => claim.policynumber == event.target.value));
+    if(!isLoading){
+    setPolicyToDisplay(allOpenClaims.filter((claim,index) => claim.policyNumber == event.target.value));
     setShowDisplay(false);  
     setBackToClaims(false);
+    }
 
    }
 
@@ -39,6 +84,7 @@ const OpenClaims = (props) => {
 return(
 
     <>
+    {!isLoading && 
 
 <div>
 
@@ -49,21 +95,32 @@ return(
 
 
 
-    {!showDisplay && <div className="oc-select-box"> <ul>
+    {allOpenClaims != ""  && <>
+    
+    
+
+
+    {!showDisplay && <>
+        <div className="oc-select-box"> <ul>
    
-    {openClaims.map((claim, index) => <div key={index}>
-    <li>{claim.claimtype} Policy</li> 
-    <li>Policy # {claim.policynumber}</li> 
-    <button value = {claim.policynumber} onClick = {showClaim}>View details</button>
+    {allOpenClaims.map((claim, index) => <div key={index}>
+    <li>{claim.claimType} Policy</li> 
+    <li>Policy # {claim.policyNumber}</li> 
+    <button value = {claim.policyNumber} onClick = {showClaim}>View details</button>
    
 
     <br/><br/>
-    </div>)}
+    </div>)}  
+    
+    </ul></div>
 
-    </ul></div>}
+    </> }
+    
+    </> }
 
 {showDisplay && <PolicyDetails policy={policyToDisplay[0]}  />}
-</div>           
+</div> 
+}          
     </>
 )
      }

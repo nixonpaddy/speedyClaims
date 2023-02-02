@@ -12,6 +12,8 @@ const TableRow = (props) => {
 
   
     return(
+
+        
         <>
         <tr>
             <td>{props.claim.policyNumber}</td>

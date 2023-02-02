@@ -1,12 +1,14 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { searchName } from "./ClaimsData";
 import ResultsTable from "./ResultsTable";
 
 
 
 const SearchClaim = (props) =>{
 
-  console.log(props.allClaims);
+ // console.log(props.allClaims);
 
 const [displayTable, setDisplayTable] = useState(false);
 const [searchBoxes, setSearchBoxes] = useState(false);
@@ -15,6 +17,10 @@ const [nameSearch, setNameSearch] = useState("");
 const [oneTerm, setOneTerm] = useState(false);
 const navigate = useNavigate();
 const allClaims = props.allClaims;
+const theClaim = props.policyEdit;
+const[nameResults, setNameResults] = useState([]);
+//const[policyEdit, setPolicyEdit] = useState();
+
 
 const handleChange = (event) => {
   setPolicySearchTerm(event.target.value);
@@ -28,10 +34,14 @@ const handleNameChange = (event) => {
 
 const carryOutSearch = (event) => {  
   event.preventDefault();
+
+ 
+
   props.setSearchTerm(policySearchTerm);
   props.setNameSearchTerm(nameSearch);
+  
 
-  if(nameSearch!==""){
+  if(nameSearch!==""){    
     props.setSearchType("name");
     navigate(`/search/${nameSearch}`);
   }else{
@@ -41,14 +51,19 @@ const carryOutSearch = (event) => {
 
   setDisplayTable(true);
   setSearchBoxes(true);
-  //props.setEdit();
+  setPolicySearchTerm(""); 
+  setNameSearch("");
+  setOneTerm(false); 
 }
+
+
 
 
 const clearSearch = (event) => {
   event.preventDefault();
   props.setSearchTerm("");
   props.setNameSearchTerm("");
+  props.setSearchType("policy");
   navigate(`/search`);
   setPolicySearchTerm(""); 
   setNameSearch("");
@@ -67,6 +82,25 @@ const oneTermEntered = () => {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+useEffect(() => {
+    if(props.searchType == "name"){
+
+     searchName(props.nameSearchTerm)
+   .then(response => {setNameResults(response.data)})  
+    }
+
+ },[props.searchType ])
 
 
     return(
@@ -103,7 +137,7 @@ const oneTermEntered = () => {
         </div>
         <br/>  
 
-        {displayTable && <ResultsTable setPolicyToEdit={props.setPolicyToEdit} nameSearch={nameSearch} searchTerm={props.searchTerm} allClaims={allClaims} searchType={props.searchType} thePolicy={props.policyEdit}/>}
+        {displayTable && <ResultsTable   setPolicyEdit={props.setPolicyEdit} nameResults={nameResults} setPolicyToEdit={props.setPolicyToEdit} nameSearch={nameSearch} searchTerm={props.searchTerm} allClaims={allClaims} searchType={props.searchType} thePolicy={theClaim}/>}
 
         </>
 
