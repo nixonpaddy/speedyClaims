@@ -40,8 +40,10 @@ loadData();
 
 
      useEffect(() => {
+        if(policyToDisplay !== ""){
 
         props.setPolicyEdit(policyToDisplay[0])
+        }
             
              },[policyToDisplay]);
 
@@ -68,7 +70,7 @@ loadData();
 
    const hideClaim = (event) => {
     if(!isLoading){
-    setPolicyToDisplay(allOpenClaims.filter((claim,index) => claim.policyNumber == event.target.value));
+    //setPolicyToDisplay(allOpenClaims.filter((claim,index) => claim.policyNumber == event.target.value));
     setShowDisplay(false);  
     setBackToClaims(false);
     }

@@ -77,11 +77,6 @@ const allClaims=[
 }
 
 
-// export const addNewClaim = (newClaim) => {
-//     const newList = [...allClaims,newClaim];
-//     console.log(newList); 
-
-// }
 
 
 export const addNewClaim = (claim) => {
@@ -99,8 +94,8 @@ export const addNewClaim = (claim) => {
 
 export const getClaimById = (claimId) => {
   return axios({url : "http://localhost:8080/api/claim/" + claimId,
-  method:"GET",
-  headers:{"Accept" : "application/json"}
+                 method:"GET",
+                 headers:{"Accept" : "application/json"}
   })
 }
 
@@ -128,36 +123,67 @@ export const getAllActionsAxios = () => {
 
 
 
-          export const updateClaim = (claim) => {
-            console.log(claim);
-            return axios({url : "http://localhost:8080/api/claim/" + claim.policyNumber,
-                            method: "PUT",
-                            headers: {"Accept" : "application/json", "Content-Type": "application/json"},
-                            data : claim
-                        })
-                    }
+export const updateClaim = (claim) => {
+    return axios({url : "http://localhost:8080/api/claim/" + claim.policyNumber,
+          method: "PUT",
+          headers: {"Accept" : "application/json", "Content-Type": "application/json"},
+          data : claim
+      })
+  }
 
 
-                    export const searchName = (name) => {
-                        return axios({url : "http://localhost:8080/api/claim/name/" + name,
-                                     method:"GET",
-                                     headers:{"Accept" : "application/json"}
-                                    })
-                              }
+  
 
-                              export const openClaims = () => {
-                                return axios({url : "http://localhost:8080/api/claim/open",
-                                             method:"GET",
-                                             headers:{"Accept" : "application/json"}
-                                            })
-                                      }
+export const searchName = (name) => {
+    return axios({url : "http://localhost:8080/api/claim/name/" + name,
+                  method:"GET",
+                  headers:{"Accept" : "application/json"}
+                })
+          }
 
-                                      export const archivedClaims = () => {
-                                        return axios({url : "http://localhost:8080/api/claim/archived",
-                                                     method:"GET",
-                                                     headers:{"Accept" : "application/json"}
-                                                    })
-                                              }
+
+
+
+export const openClaims = () => {
+  return axios({url : "http://localhost:8080/api/claim/open",
+              method:"GET",
+              headers:{"Accept" : "application/json"}
+            })
+      }
+
+
+
+
+export const archivedClaims = () => {
+  return axios({url : "http://localhost:8080/api/claim/archived",
+              method:"GET",
+              headers:{"Accept" : "application/json"}
+            })
+      }
+
+
+
+
+export const saveNewAction = (action) => {
+  return axios({url : "http://localhost:8080/api/action",
+                method: "POST",
+                headers: {"Accept" : "application/json", "Content-Type": "application/json"},
+                data : action
+            })
+        }
+
+
+export const getActionsByPolicy = (policyId) => {
+  return axios({url : "http://localhost:8080/api/action/" + policyId,
+              method:"GET",
+              headers:{"Accept" : "application/json"}
+  })
+}
+                                                        
+
+
+
+
 
 
 

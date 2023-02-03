@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import AddTask from "./AddTask";
 import TaskTable from "./TaskTable";
-import { getClaimById, updateClaim } from "./ClaimsData";
+import { getClaimById, saveNewAction, updateClaim } from "./ClaimsData";
 
 export const EditPolicy = (props) => {
 
@@ -145,7 +145,14 @@ const navigate = useNavigate();
   const saveModifications = (event) => {
     event.preventDefault();
 
+   
+    let newAction = {actionPolicyNumber : claimTobeEdited.policyNumber, actionTaken:claimHandlerNote, actionDate:new Date()};
+  
     updateClaim(newClaim);
+    
+    if(claimHandlerNote !== ""){
+    saveNewAction(newAction);
+    }
 
     alert("Claim Details have been modified");
     props.clearSearch();

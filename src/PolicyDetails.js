@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getActionsByPolicy } from "./ClaimsData";
 import TaskTable from "./TaskTable";
 
 const editing="false";
@@ -7,6 +8,34 @@ const editing="false";
 const PolicyDetails = (props) => {
   const [taskToUpdate, setTaskToUpdate] = useState("");
   const [displayLog, setDisplayLog] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const[actionsList, setActionsList] = useState("");
+
+  console.log(actionsList)
+
+  let actions = [];
+
+
+
+  if(actionsList !== ""){
+     actions = [...actionsList].sort((d1,d2) => new Date(d1.actionDate).getTime() - new Date(d2.actionDate).getTime());
+     console.log(actions[0])
+  }
+
+  
+
+
+  useEffect(() => {
+    if(actionsList == ""){
+
+     getActionsByPolicy(props.policy.policyNumber)
+   .then(response => {setActionsList(response.data)})  
+   
+    }
+
+    setIsLoading(false);
+
+ },[props.policy])
 
   console.log(props.policy.claimType);
 
@@ -33,9 +62,14 @@ const PolicyDetails = (props) => {
   };
 
   const tasks = props.policy.tasks;
-  console.log("Tasks are .. " + tasks);
+  //console.log("Tasks are .. " + tasks);
 
   return (
+
+    <>
+    {!isLoading &&
+
+   
     <div>
       <div
         className="container"
@@ -248,7 +282,9 @@ const PolicyDetails = (props) => {
           <h2 className="center">Log</h2>
           <div className="container" id="form-details">
             <ul>
-              {props.policy.actions.map((claim, index) => (
+              
+              
+              {actions.map((claim, index) => (
                 <div key={index}>                  
 
                       <li>
@@ -264,7 +300,7 @@ const PolicyDetails = (props) => {
         </>
       )}
     </div>
-  );
+}</>);
 };
 
 export default PolicyDetails;

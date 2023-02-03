@@ -98,6 +98,7 @@ useEffect(() => {
 
      searchName(props.nameSearchTerm)
    .then(response => {setNameResults(response.data)})  
+   
     }
 
  },[props.searchType ])

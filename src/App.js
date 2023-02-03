@@ -60,6 +60,8 @@ function App() {
 
     getClaimById(searchTerm)
     .then(response =>(setPolicyEdit(response.data)));
+
+    
   
    },[searchTerm])
  
