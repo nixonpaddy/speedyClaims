@@ -9,23 +9,67 @@ export const EditPolicy = (props) => {
 
 
 
+
+
   
 
 
 
   
 const { policyNumber } = useParams();
-const[loadingData, setLoadingData] = useState(false);
+const[loadingData, setLoadingData] = useState(true);
 const[claimTobeEdited, setClaimToBeEdited] = useState(props.policyEdit);
 const [claimType, setClaimType] = useState(props.policyEdit.claimType);
 const [addNewTask, setAddNewTask] = useState(false);
 const [claimHandlerNote, setClaimHandlerNote] = useState("");
 const [tasks, setTasks] = useState();  
 const [newTask, setNewTask] = useState("");
+//const[policyNumber, setPolicyNumber] = useState(props.policyEdit.policyNumber)
+
+
+
+useEffect(() => {
+
+  //if(props.searchTerm !== ""){
+    
+
+  getClaimById(policyNumber)
+  .then(response =>(setClaimToBeEdited(response.data))).then(props.setPolicyEdit(claimTobeEdited)).then(setLoadingData(false));
+  //props.setPolicyEdit(claimTobeEdited)
+
+  //}
+  
+
+ },[props.searchTerm])
 
 
 
 const navigate = useNavigate();
+
+
+useEffect(() => {
+
+ 
+
+    props.setSearchTerm(policyNumber);
+
+
+
+},[props.searchTerm])
+
+console.log(claimTobeEdited)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -37,30 +81,8 @@ const navigate = useNavigate();
   };
  
 
-
-  // const initialClaimState = {
-  //   policyNumber: 0,
-  //   firstName: "",
-  //   surname: "",
-  //   claimstatus: claimTobeEdited[0].claimStatus,
-  //   otherinfo: claimTobeEdited[0].otherInfo,
-  //   animaltype: claimTobeEdited[0].animalType,
-  //   approvedpayoutamount: claimTobeEdited[0].approvedPayoutAmount,
-  //   breedtype: claimTobeEdited[0].breedType,
-  //   claimamount: claimTobeEdited[0].claimAmount,
-  //   claimdate: claimTobeEdited[0].claimDate,
-  //   claimtype: claimTobeEdited.claimType,
-  //   propertyaddress: claimTobeEdited[0].propertyAddress,
-  //   reasonforclaim: claimTobeEdited[0].reasonForClaim,
-  //   vehiclemake: claimTobeEdited[0].vehicleMake,
-  //   vehiclemodel: claimTobeEdited[0].vehicleModel,
-  //   vehicleyear: claimTobeEdited[0].vehicleYear,
-  //   actionslog: claimDiary,
-  //   tasks: tasks,
-  // };
-
   let initialClaimState = {
-    policyNumber:claimTobeEdited.policyNumber,
+    policyNumber:policyNumber,
     // firstName: claimTobeEdited.firstName,
     // surname: claimTobeEdited.surname,
     // claimStatus: claimTobeEdited.claimStatus,
@@ -83,21 +105,6 @@ const navigate = useNavigate();
   
 
  const [newClaim, dispatch] = useReducer(formReducer, initialClaimState);
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
   
 
 
@@ -157,6 +164,7 @@ const navigate = useNavigate();
     alert("Claim Details have been modified");
     props.clearSearch();
     navigate("/OpenClaims");
+    props.setSearchType("policy");
   };
 
   const policyTypeChange = (event) => {
@@ -173,7 +181,7 @@ const navigate = useNavigate();
     <div>
       
       <div className="container" id="form-details">
-        {!loadingData && 
+        {(!loadingData && props.policyEdit.policyNumber == policyNumber) && 
         <form onSubmit={saveModifications}>
           <div className="row">
             <div className="col">

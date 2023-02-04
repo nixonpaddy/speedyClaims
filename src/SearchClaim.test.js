@@ -4,6 +4,20 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SearchClaim from "./SearchClaim";
 
 
+
+jest.mock("./ClaimsData",  () => {
+    return {
+        searchName : () => {
+            return Promise.resolve({status: 200, data : ["a","b","c"]});
+        },
+        //addNewClaim : (newClaim)=> {},
+       // getAllPaymentsForCountry : () => Promise.resolve({status: 200, data : []})
+
+    }
+});
+
+
+
 test("check that the search button is not enabled initially", () => {
 
     render(

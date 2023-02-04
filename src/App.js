@@ -28,7 +28,7 @@ function App() {
   
   const [currentUser, setCurrentUser] = useState({ name : "", role : ""});
 
-  console.log(policyEdit);
+  console.log(searchTerm);
 
   const clearSearch = () => {
     setSearchTerm(""); 
@@ -36,6 +36,7 @@ function App() {
   }
 
  
+    console.log(policyEdit)
 
 
   const loadData = () => {
@@ -51,16 +52,16 @@ function App() {
 
  },[])
 
- console.log(searchTerm)
-
-
-
+ 
   useEffect(() => {
-        
+
+    if(searchTerm !== ""){
+      
 
     getClaimById(searchTerm)
     .then(response =>(setPolicyEdit(response.data)));
 
+    }
     
   
    },[searchTerm])
@@ -89,7 +90,7 @@ function App() {
         <Route path="/" element = { <h1 className="center">Welcome to the Claims system. Please select an option above.</h1>}/>
         <Route path="/PolicyDetails/:policyNumber"  element={<PolicyDetails  />}/>
         <Route path="*"  element={<h1 className="center">This page does not exist</h1>}/>
-        <Route path="/editpolicy/:policyNumber"  element={<EditPolicy  policyEdit={policyEdit} claimsList={newClaimsList} setNewClaimsList={setNewClaimsList} clearSearch={clearSearch} />}/>
+        <Route path="/editpolicy/:policyNumber"  element={<EditPolicy  setSearchType={setSearchType} setPolicyEdit= {setPolicyEdit} setSearchTerm={setSearchTerm} policyEdit={policyEdit} claimsList={newClaimsList} setNewClaimsList={setNewClaimsList} clearSearch={clearSearch} />}/>
         <Route path="/archived"  element={<ArchivedClaims allClaims={newClaimsList} />}/>
       </Route>     
     </Routes>

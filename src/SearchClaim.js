@@ -82,17 +82,6 @@ const oneTermEntered = () => {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 useEffect(() => {
     if(props.searchType == "name"){
 

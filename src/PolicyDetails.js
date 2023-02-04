@@ -11,15 +11,12 @@ const PolicyDetails = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const[actionsList, setActionsList] = useState("");
 
-  console.log(actionsList)
-
   let actions = [];
 
 
 
   if(actionsList !== ""){
      actions = [...actionsList].sort((d1,d2) => new Date(d1.actionDate).getTime() - new Date(d2.actionDate).getTime());
-     console.log(actions[0])
   }
 
   
@@ -37,8 +34,7 @@ const PolicyDetails = (props) => {
 
  },[props.policy])
 
-  console.log(props.policy.claimType);
-
+ 
   const navigate = useNavigate();
 
   const clickEdit = (event) => {
@@ -102,10 +98,10 @@ const PolicyDetails = (props) => {
 
           <div className="row">
             <div className="col">
-              <label className="bolden">Claim Type:</label>
+              <label className="bolden" htmlFor="claimType" >Claim Type:</label>
             </div>
             <div className="col">
-              <span>{props.policy.claimType}</span>
+              <span id="claimType" name="claimType">{props.policy.claimType}</span>
               <br />
             </div>
           </div>
