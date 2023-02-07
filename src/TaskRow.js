@@ -15,7 +15,7 @@ const TaskRow = (props) => {
     return(
         <>
         <tr>
-            <td>{props.task.task}</td>
+            <td>{props.task.taskDetails}</td>
             <td><button disabled={props.editable} value={props.position} onClick={clickComplete}>Mark Complete</button></td>            
         </tr>        
         </>

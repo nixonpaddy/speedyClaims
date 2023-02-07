@@ -1,4 +1,4 @@
-import getAllClaims from "./ClaimsData";
+import getAllClaims, { saveNewAction } from "./ClaimsData";
  import { useReducer, useState } from "react";
 import "./claims.css"
 import { addNewClaim } from "./ClaimsData";
@@ -16,11 +16,18 @@ const NewClaim = (props) => {
 
     }
 
-    //console.log(props.newClaimsList.length);
+    console.log(new Date().toLocaleString().slice(0,10));
 
     
     
 //policyNumber: props.currentPolicyNumber
+
+const dateObj = new Date();
+const month = dateObj.getUTCMonth() +1;
+const day = dateObj.getUTCDate();
+const year = dateObj.getUTCFullYear();
+
+const todaysDate = month + "/" + day + "/" + year;
 
   const template ={surname: "", firstName: "", claimDate:"", claimType:"", 
   vehicleMake:"", vehicleModel:"", vehicleYear:"", 
@@ -28,7 +35,7 @@ const NewClaim = (props) => {
   animalType:"", breedType:"",
   claimAmount:0, reasonForClaim:"", otheriInfo:"",
   claimStatus:"Awaiting Assessment", approvedPayoutAmount:"Pending",
-  actions:[{actionTaken : new Date().toLocaleString().slice(0,10) + "   - Claim Created", actionPolicyNumber : props.newClaimsList.length}]}
+  actions:[{actionTaken : todaysDate + "   - Claim Created", actionPolicyNumber : props.newClaimsList.length+1, actionDate: new Date()}]}
 
  
   const formReducer = (state, data) => {
@@ -56,7 +63,13 @@ const NewClaim = (props) => {
     addNewClaim(aNewClaim)
         .then( response => {
             if (response.status === 200) {
-                alert("New transaction added with id " + response.data.policyNumber);
+
+              if(response.data.claimStatus == "Transferred"){
+                alert("New claim added with id " + response.data.policyNumber + ". Please note, because you are claiming in excess of £500, your claim has been transferred to our main system. One of our agents will be in touch shortly.");
+              }else{
+                alert("New claim added with id " + response.data.policyNumber);
+              }
+                
                 navigate(`/`); 
                 props.loadData();
             }
@@ -68,6 +81,7 @@ const NewClaim = (props) => {
         .catch( error => {
             console.log("Something went wrong - " + error);
         })
+        navigate("/");
 } 
 
 

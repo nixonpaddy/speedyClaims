@@ -179,6 +179,20 @@ export const getActionsByPolicy = (policyId) => {
               headers:{"Accept" : "application/json"}
   })
 }
+
+
+
+export const getTasksByPolicy = (policyId) => {
+  return axios({url : "http://localhost:8080/api/task/" + policyId,
+              method:"GET",
+              headers:{"Accept" : "application/json"}
+  })
+}
+
+
+
+
+
                                                         
 
 

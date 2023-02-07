@@ -31,7 +31,6 @@ const buttons = screen.getAllByRole("button");
 
 const searchButton = buttons.find( b => b.textContent == "Search" );
 console.log(buttons);
-//expect().toBeInTheDocument();
 expect(searchButton).toBeDisabled();
 
   

@@ -22,9 +22,11 @@ const[claimTobeEdited, setClaimToBeEdited] = useState(props.policyEdit);
 const [claimType, setClaimType] = useState(props.policyEdit.claimType);
 const [addNewTask, setAddNewTask] = useState(false);
 const [claimHandlerNote, setClaimHandlerNote] = useState("");
-const [tasks, setTasks] = useState();  
+const [tasks, setTasks] = useState(props.tasks);  
 const [newTask, setNewTask] = useState("");
 //const[policyNumber, setPolicyNumber] = useState(props.policyEdit.policyNumber)
+
+console.log(tasks);
 
 
 
@@ -152,7 +154,7 @@ console.log(claimTobeEdited)
   const saveModifications = (event) => {
     event.preventDefault();
 
-   
+       
     let newAction = {actionPolicyNumber : claimTobeEdited.policyNumber, actionTaken:claimHandlerNote, actionDate:new Date()};
   
     updateClaim(newClaim);
@@ -434,7 +436,7 @@ console.log(claimTobeEdited)
                   Accepted - Awaiting Payment
                 </option>
                 <option disabled={!showApprove} value="Accepted - Paid">Accepted - Paid</option>
-                <option value="Escalated">Escalated</option>
+                <option value="Escalated">Transferred</option>
               </select>
             </div>
           </div>
@@ -455,7 +457,7 @@ console.log(claimTobeEdited)
           </div>
           <br />
 
-          {/* <TaskTable tasks={tasks} editable={false}setTasks={setTasks} /> */}
+          {/* <TaskTable tasks={tasks} editable={false} setTasks={setTasks} /> */}
 
           <div className="row">
             {addNewTask && (

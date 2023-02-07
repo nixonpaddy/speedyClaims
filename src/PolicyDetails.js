@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getActionsByPolicy } from "./ClaimsData";
+import { getActionsByPolicy, getTasksByPolicy } from "./ClaimsData";
 import TaskTable from "./TaskTable";
 
 const editing="false";
@@ -10,6 +10,7 @@ const PolicyDetails = (props) => {
   const [displayLog, setDisplayLog] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const[actionsList, setActionsList] = useState("");
+  const [tasksList, setTasksList] = useState("");
 
   let actions = [];
 
@@ -30,9 +31,45 @@ const PolicyDetails = (props) => {
    
     }
 
+    getTasksByPolicy(props.policy.policyNumber)
+    .then(response => {setTasksList(response.data)})
+
     setIsLoading(false);
 
  },[props.policy])
+
+
+
+
+
+ useEffect(() => {
+  if(tasksList == ""){
+
+    console.log(props.policy)
+
+
+  getTasksByPolicy(props.policy.policyNumber)
+  .then(response => {setTasksList(response.data)})
+ 
+  }
+
+
+
+  setIsLoading(false);
+
+},[props.policy])
+
+
+
+
+
+
+
+
+
+
+
+
 
  
   const navigate = useNavigate();
@@ -57,7 +94,7 @@ const PolicyDetails = (props) => {
     setDisplayLog(!displayLog);
   };
 
-  const tasks = props.policy.tasks;
+  const tasks = tasksList;
   //console.log("Tasks are .. " + tasks);
 
   return (
@@ -240,8 +277,8 @@ const PolicyDetails = (props) => {
             <div className="col">
               <label className="bolden">Follow-up Tasks:</label>
             </div>
-            {/* <TaskTable editable={true} tasks={tasks} setTaskToUpdate={setTaskToUpdate} /> */}
-            {/* <div className="col"><span> {props.policy.task}</span><br/></div> */}
+            {tasksList !== "" && <><TaskTable editable={true} tasks={tasks} setTaskToUpdate={setTaskToUpdate} /> 
+             <div className="col"><span> {props.policy.task}</span><br/></div> </>}
           </div>
 
           <div className="row">
