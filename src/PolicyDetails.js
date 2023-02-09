@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { getActionsByPolicy, getTasksByPolicy } from "./ClaimsData";
 import TaskTable from "./TaskTable";
 
-const editing="false";
+
 
 const PolicyDetails = (props) => {
   const [taskToUpdate, setTaskToUpdate] = useState("");
   const [displayLog, setDisplayLog] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const[actionsList, setActionsList] = useState("");
+  const [actionsList, setActionsList] = useState("");
   const [tasksList, setTasksList] = useState("");
-
+  const navigate = useNavigate();
   let actions = [];
 
 
@@ -19,23 +19,16 @@ const PolicyDetails = (props) => {
   if(actionsList !== ""){
      actions = [...actionsList].sort((d1,d2) => new Date(d1.actionDate).getTime() - new Date(d2.actionDate).getTime());
   }
+ 
 
   
 
 
   useEffect(() => {
     if(actionsList == ""){
-
      getActionsByPolicy(props.policy.policyNumber)
-   .then(response => {setActionsList(response.data)})  
-   
+    .then(response => {setActionsList(response.data)})     
     }
-
-    getTasksByPolicy(props.policy.policyNumber)
-    .then(response => {setTasksList(response.data)})
-
-    setIsLoading(false);
-
  },[props.policy])
 
 
@@ -44,58 +37,47 @@ const PolicyDetails = (props) => {
 
  useEffect(() => {
   if(tasksList == ""){
-
-    console.log(props.policy)
-
-
-  getTasksByPolicy(props.policy.policyNumber)
-  .then(response => {setTasksList(response.data)})
- 
+    getTasksByPolicy(props.policy.policyNumber)
+    .then(response => {setTasksList(response.data)}) 
   }
-
-
-
   setIsLoading(false);
-
 },[props.policy])
 
 
 
 
-
-
-
-
-
-
-
-
-
  
-  const navigate = useNavigate();
+  
 
   const clickEdit = (event) => {
     event.preventDefault();
     navigate(`/editpolicy/${props.policy.policyNumber}`);
   };
 
+
+
   const canBeEdited = () => {
     if (
       props.policy.claimStatus == "Rejected" ||
-      props.policy.claimStatus == "Accepted - Paid"
+      props.policy.claimStatus == "Accepted - Paid" ||
+      props.policy.claimStatus == "Transferred"
     ) {
       return false;
     }
     return true;
   };
 
+
   const logDisplay = (event) => {
     event.preventDefault();
     setDisplayLog(!displayLog);
   };
 
+  
   const tasks = tasksList;
-  //console.log("Tasks are .. " + tasks);
+
+
+
 
   return (
 
@@ -277,7 +259,7 @@ const PolicyDetails = (props) => {
             <div className="col">
               <label className="bolden">Follow-up Tasks:</label>
             </div>
-            {tasksList !== "" && <><TaskTable editable={true} tasks={tasks} setTaskToUpdate={setTaskToUpdate} /> 
+            {tasksList !== "" && <><TaskTable editable={false} tasks={tasks} claimId={props.policy.policyNumber} setTaskToUpdate={setTaskToUpdate} /> 
              <div className="col"><span> {props.policy.task}</span><br/></div> </>}
           </div>
 

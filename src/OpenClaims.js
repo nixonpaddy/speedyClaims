@@ -106,8 +106,9 @@ return(
         <div className="oc-select-box"> <ul>
    
     {allOpenClaims.map((claim, index) => <div key={index}>
-    <li>{claim.claimType} Policy</li> 
+    <li>{claim.claimType} Claim</li> 
     <li>Policy # {claim.policyNumber}</li> 
+    <li> {claim.claimStatus}</li> 
     <button value = {claim.policyNumber} onClick = {showClaim}>View details</button>
    
 

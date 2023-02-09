@@ -1,5 +1,4 @@
-import getAllClaims, { saveNewAction } from "./ClaimsData";
- import { useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import "./claims.css"
 import { addNewClaim } from "./ClaimsData";
 import { useNavigate } from "react-router-dom";
@@ -18,9 +17,7 @@ const NewClaim = (props) => {
 
     console.log(new Date().toLocaleString().slice(0,10));
 
-    
-    
-//policyNumber: props.currentPolicyNumber
+ 
 
 const dateObj = new Date();
 const month = dateObj.getUTCMonth() +1;
@@ -47,15 +44,6 @@ const todaysDate = month + "/" + day + "/" + year;
 
 
 
-  // const addClaim = (event) => {
-  //   event.preventDefault();
-  //   props.setNewClaimsList([...props.newClaimsList, aNewClaim]);
-  //   alert("New claim has been added");    
-  //   props.setCurrentPolicyNumber(props.currentPolicyNumber+1);
-  //   navigate(`/`);  
-  
-  // }
-
 
   const addClaim = (event) => {
     event.preventDefault();
@@ -64,7 +52,7 @@ const todaysDate = month + "/" + day + "/" + year;
         .then( response => {
             if (response.status === 200) {
 
-              if(response.data.claimStatus == "Transferred"){
+              if(response.data.claimStatus === "Transferred"){
                 alert("New claim added with id " + response.data.policyNumber + ". Please note, because you are claiming in excess of £500, your claim has been transferred to our main system. One of our agents will be in touch shortly.");
               }else{
                 alert("New claim added with id " + response.data.policyNumber);
@@ -110,10 +98,10 @@ const todaysDate = month + "/" + day + "/" + year;
         <br/>
         <div className="container" id="form-details">
           <form onSubmit={addClaim}>
-            <div className="row">
+            {/* <div className="row">
               <div className="col"><label>Policy Number:</label></div>
               <div className="col"><input disabled value={props.currentPolicyNumber} type="text" id="policyNumber" /><br/></div>
-            </div><br/>
+            </div><br/> */}
       
             <div className="row">
               <div className="col"><label>First Name:</label></div>

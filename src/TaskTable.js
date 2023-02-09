@@ -1,18 +1,16 @@
-import { useEffect, useState } from "react";
-// import { propTypes } from "react-bootstrap/esm/Image";
-// import getAllClaims from "./ClaimsData";
-// import PolicyDetails from "./PolicyDetails";
+import { useState } from "react";
 import TaskRow from "./TaskRow";
 
-const TaskTable = ({tasks,setTasks, editable}) => {
+const TaskTable = ({tasks, setTasks, editable, claimId, setOutstandingTasks, outstandingTasks}) => {
 
-    const [taskToUpdate, setTasktoUpdate] = useState("");
+    const [taskToUpdate, setTasktoUpdate] = useState(true);
 
     const markTaskComplete = (position) => {
         const newTasks = [...tasks];
         newTasks[position].taskstatus = 'Completed'
         setTasks(newTasks);
-    }
+        setOutstandingTasks(false);
+            }
 
 
 
@@ -38,7 +36,7 @@ const TaskTable = ({tasks,setTasks, editable}) => {
                 </tr>
             </thead>
             <tbody>
-                {tasks.map((task, index) =>  task.taskstatus !=="Completed" && <TaskRow editable={editable} task={task} markTaskComplete={markTaskComplete} position={index} key={index} taskPosition={index} setTaskToUpdate={setTasktoUpdate}/>)}
+                {tasks.map((task, index) =>   <TaskRow editable={editable} task={task} markTaskComplete={markTaskComplete} position={index} key={index} taskPosition={index} claimId={claimId} taskToUpdate = {taskToUpdate} setTaskToUpdate={setTasktoUpdate}/>)}
 
             </tbody>
         </table>

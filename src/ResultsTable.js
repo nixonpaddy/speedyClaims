@@ -5,11 +5,9 @@ import PolicyDetails from "./PolicyDetails";
 import TableRow from "./TableRow";
 
 const ResultsTable = (props) => {
+    
 
-
-
-    const[actionsList, setActionsList] = useState();
-  
+    //const[actionsList, setActionsList] = useState();  
 
     let searchResults = [];
     
@@ -25,25 +23,13 @@ const ResultsTable = (props) => {
     
 
 
-
     useEffect(() => {
-
         if(selectedPolicy !== ""){
-
         if(searchResults.length>1){
             props.setPolicyEdit(searchResults[selectedPolicy]);
             }
-        }
-            
+        }            
              },[selectedPolicy]);
-
-
-
-
-    
-
-
-
 
     
 

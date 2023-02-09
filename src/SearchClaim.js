@@ -83,7 +83,7 @@ const oneTermEntered = () => {
 
 
 useEffect(() => {
-    if(props.searchType == "name"){
+    if(props.searchType === "name"){
 
      searchName(props.nameSearchTerm)
    .then(response => {setNameResults(response.data)})  
@@ -102,9 +102,9 @@ useEffect(() => {
         <br/>
         <div className="container" id="form-details">
           <form onSubmit={carryOutSearch}>
-            { props.nameSearchTerm == "" && props.searchTerm == "" &&
+            { props.nameSearchTerm === "" && props.searchTerm === "" &&
             <><div className="row">
-              <div className="col"><label>Search by Policy Number:</label></div>
+              <div className="col"><label>Search by Claim Number:</label></div>
               <div className="col"><input type="text" disabled={searchBoxes} onChange={handleChange} onKeyUp={oneTermEntered} value={policySearchTerm}/><br/></div>
             </div><br/>
       

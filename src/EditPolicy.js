@@ -3,15 +3,9 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import AddTask from "./AddTask";
 import TaskTable from "./TaskTable";
-import { getClaimById, saveNewAction, updateClaim } from "./ClaimsData";
+import { getClaimById, getTasksByPolicy, saveNewAction, saveNewTask, updateClaim } from "./ClaimsData";
 
 export const EditPolicy = (props) => {
-
-
-
-
-
-  
 
 
 
@@ -22,55 +16,43 @@ const[claimTobeEdited, setClaimToBeEdited] = useState(props.policyEdit);
 const [claimType, setClaimType] = useState(props.policyEdit.claimType);
 const [addNewTask, setAddNewTask] = useState(false);
 const [claimHandlerNote, setClaimHandlerNote] = useState("");
-const [tasks, setTasks] = useState(props.tasks);  
+const [tasks, setTasks] = useState("");  
 const [newTask, setNewTask] = useState("");
-//const[policyNumber, setPolicyNumber] = useState(props.policyEdit.policyNumber)
-
-console.log(tasks);
-
-
-
-useEffect(() => {
-
-  //if(props.searchTerm !== ""){
-    
-
-  getClaimById(policyNumber)
-  .then(response =>(setClaimToBeEdited(response.data))).then(props.setPolicyEdit(claimTobeEdited)).then(setLoadingData(false));
-  //props.setPolicyEdit(claimTobeEdited)
-
-  //}
-  
-
- },[props.searchTerm])
-
-
-
+const [outstandingTasks, setOutstandingTasks] = useState(false);
 const navigate = useNavigate();
 
 
 useEffect(() => {
+  getClaimById(policyNumber)
+  .then(response =>(setClaimToBeEdited(response.data))).then(props.setPolicyEdit(claimTobeEdited)).then(setLoadingData(false));
+   },[props.searchTerm])
 
- 
 
+
+
+ useEffect(() => {
+  getTasksByPolicy(policyNumber)
+  .then(response => {setTasks(response.data)})
+},[props.policy])
+
+
+
+useEffect(() => {
+ if(tasks.length > 0 ){
+  for(const task of tasks){
+      if (task.taskStatus == "Outstanding"){
+    setOutstandingTasks(true); 
+  }
+}
+ }
+},[tasks])
+
+
+
+
+useEffect(() => {
     props.setSearchTerm(policyNumber);
-
-
-
 },[props.searchTerm])
-
-console.log(claimTobeEdited)
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -107,6 +89,8 @@ console.log(claimTobeEdited)
   
 
  const [newClaim, dispatch] = useReducer(formReducer, initialClaimState);
+
+
   
 
 
@@ -118,21 +102,6 @@ console.log(claimTobeEdited)
     dispatch({ field: event.target.id, value: event.target.value });
   };
 
-  
-
-
-
-
-
-
-  let showApprove = true;
-
-
-
-  
- 
-
-  
 
   const handleClaimHandlerNoteChange = (event) => {
     setClaimHandlerNote(
@@ -140,9 +109,14 @@ console.log(claimTobeEdited)
     );
   };
 
+
   const handleNewTaskChange = (event) => {
     setNewTask(event.target.value);
   };
+
+
+
+
 
   
 
@@ -150,6 +124,7 @@ console.log(claimTobeEdited)
     event.preventDefault();
     setAddNewTask(true);
   };
+
 
   const saveModifications = (event) => {
     event.preventDefault();
@@ -163,10 +138,18 @@ console.log(claimTobeEdited)
     saveNewAction(newAction);
     }
 
+    if(newTask !== ""){
+      const aNewTask = {taskDetails: newTask, taskStatus: "Outstanding", claimLinkedTo:claimTobeEdited.policyNumber }
+      saveNewTask(aNewTask)
+    }
+
     alert("Claim Details have been modified");
     props.clearSearch();
     navigate("/OpenClaims");
     props.setSearchType("policy");
+
+
+
   };
 
   const policyTypeChange = (event) => {
@@ -431,11 +414,11 @@ console.log(claimTobeEdited)
                   Awaiting Initial Assessment
                 </option>
                 <option value="In Progress">In Progress</option>
-                <option value="Rejected">Rejected</option>
-                <option  disabled={!showApprove} value="Accepted - Awaiting Payment">
+                <option disabled={outstandingTasks} value="Rejected">Rejected</option>
+                <option value="Accepted - Awaiting Payment">
                   Accepted - Awaiting Payment
                 </option>
-                <option disabled={!showApprove} value="Accepted - Paid">Accepted - Paid</option>
+                <option disabled={outstandingTasks} value="Accepted - Paid">Accepted - Paid</option>
                 <option value="Escalated">Transferred</option>
               </select>
             </div>
@@ -457,7 +440,7 @@ console.log(claimTobeEdited)
           </div>
           <br />
 
-          {/* <TaskTable tasks={tasks} editable={false} setTasks={setTasks} /> */}
+          {tasks !== "" && <TaskTable outstandingTasks={outstandingTasks} setOutstandingTasks={setOutstandingTasks} tasks={tasks} editable={true} setTasks={setTasks} />} 
 
           <div className="row">
             {addNewTask && (
@@ -501,9 +484,6 @@ console.log(claimTobeEdited)
 
           </div>
           <br />
-
-          {/* <div className="center"><button>Save</button></div> */}
-
           <br />
         </form>
 }
